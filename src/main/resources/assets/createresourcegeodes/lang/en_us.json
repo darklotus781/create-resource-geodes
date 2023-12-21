@@ -3,5 +3,9 @@
     "block.createresourcegeodes.asurine_catalyst": "Asurine Catalyst",
     "block.createresourcegeodes.crimsite_catalyst": "Crimsite Catalyst",
     "block.createresourcegeodes.ochrum_catalyst": "Ochrum Catalyst",
-    "block.createresourcegeodes.veridium_catalyst": "Veridium Catalyst"
+    "block.createresourcegeodes.veridium_catalyst": "Veridium Catalyst",
+    "block.createresourcegeodes.faux_asurine": "Asurine",
+    "block.createresourcegeodes.faux_crimsite": "Crimsite",
+    "block.createresourcegeodes.faux_ochrum": "Ochrum",
+    "block.createresourcegeodes.faux_veridium": "Veridium"
 }

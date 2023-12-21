@@ -22,6 +22,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.CRIMSITE_CATALYST);
         blockWithItem(ModBlocks.OCHRUM_CATALYST);
         blockWithItem(ModBlocks.VERIDIUM_CATALYST);
+//        blockWithItem(ModBlocks.FAUX_ASURINE);
+//        blockWithItem(ModBlocks.FAUX_CRIMSITE);
+//        blockWithItem(ModBlocks.FAUX_OCHRUM);
+//        blockWithItem(ModBlocks.FAUX_VERIDIUM);
     }
 
     private String name(Block block) {

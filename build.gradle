@@ -150,7 +150,7 @@ dependencies {
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
 
 //    implementation fg.deobf("curse.maven:embeddium-908741:4949986")
-//    implementation fg.deobf("curse.maven:create-328085:4835191")
+    implementation fg.deobf("curse.maven:create-328085:4835191")
 
 
     // For more info:
@@ -168,7 +168,7 @@ tasks.named('processResources', ProcessResources).configure {
             forge_version: forge_version, forge_version_range: forge_version_range,
             loader_version_range: loader_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors: mod_authors, mod_description: mod_description,
+            mod_authors: mod_authors, mod_description: mod_description, create_version_range: create_version_range
     ]
 
     inputs.properties replaceProperties
