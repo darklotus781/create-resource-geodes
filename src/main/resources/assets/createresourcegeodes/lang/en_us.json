@@ -7,5 +7,7 @@
     "block.createresourcegeodes.faux_asurine": "Asurine",
     "block.createresourcegeodes.faux_crimsite": "Crimsite",
     "block.createresourcegeodes.faux_ochrum": "Ochrum",
-    "block.createresourcegeodes.faux_veridium": "Veridium"
+    "block.createresourcegeodes.faux_veridium": "Veridium",
+    "block.createresourcegeodes.sky_stone_catalyst": "Sky Stone Catalyst",
+    "item.createresourcegeodes.catalyst_activator_wand": "Catalyst Activator Wand"
 }

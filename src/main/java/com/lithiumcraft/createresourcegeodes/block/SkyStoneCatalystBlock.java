@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -30,17 +31,20 @@ import java.util.Random;
 import static net.minecraft.world.item.Items.REDSTONE;
 
 @Mod.EventBusSubscriber
-public class OchrumCatalystBlock extends CatalystBlock {
+public class SkyStoneCatalystBlock extends CatalystBlock {
 
     public static Block generatorBlock;
 
     public static final Random RAND = new Random();
 
 
-    public OchrumCatalystBlock(Properties pProperties) {
+    public SkyStoneCatalystBlock(Properties pProperties) {
         super(pProperties);
 
-        generatorBlock = RegistryObject.create(new ResourceLocation("create:ochrum"), ForgeRegistries.BLOCKS).get();
+        // Ensure AE2 is Optional, Sky Stone Catalyst doesn't spawn in the wild without AE2, so this will never be an issue.
+        generatorBlock = !ModList.get().isLoaded("ae2") ?
+            ModBlocks.FAUX_SKY_STONE.get() :
+            RegistryObject.create(new ResourceLocation("ae2:sky_stone_block"), ForgeRegistries.BLOCKS).get();
     }
 
     protected static void generateBlockPlacements(Level level, BlockPos pos, int RADIUS, int CHANCE) {

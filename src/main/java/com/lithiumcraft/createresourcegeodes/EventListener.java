@@ -12,8 +12,8 @@ public class EventListener {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
+
     @SubscribeEvent
     public void onServerTick(TickEvent.LevelTickEvent event) {
 

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "createresourcegeodes:block/sky_stone_catalyst"
+  }
+}

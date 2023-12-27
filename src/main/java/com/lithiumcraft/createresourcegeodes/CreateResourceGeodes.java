@@ -43,10 +43,8 @@ public class CreateResourceGeodes {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
     }
 
-    // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
@@ -54,6 +52,7 @@ public class CreateResourceGeodes {
             event.accept(ModBlocks.CRIMSITE_CATALYST);
             event.accept(ModBlocks.OCHRUM_CATALYST);
             event.accept(ModBlocks.VERIDIUM_CATALYST);
+            event.accept(ModBlocks.SKY_STONE_CATALYST);
         }
     }
 }

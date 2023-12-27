@@ -22,6 +22,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.CRIMSITE_CATALYST.get());
                         pOutput.accept(ModBlocks.OCHRUM_CATALYST.get());
                         pOutput.accept(ModBlocks.VERIDIUM_CATALYST.get());
+                        pOutput.accept(ModBlocks.SKY_STONE_CATALYST.get());
+                        pOutput.accept(ModItems.ACTIVATOR_WAND.get());
                     })
                     .build());
 

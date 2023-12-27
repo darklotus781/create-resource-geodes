@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "createresourcegeodes:item/catalyst_activator_wand"
+  }
+}
