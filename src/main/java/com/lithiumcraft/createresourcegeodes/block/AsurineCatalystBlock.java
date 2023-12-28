@@ -2,7 +2,6 @@ package com.lithiumcraft.createresourcegeodes.block;
 
 import com.lithiumcraft.createresourcegeodes.item.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -94,43 +93,42 @@ public class AsurineCatalystBlock extends CatalystBlock {
         int RADIUS = RAND.nextInt(4) + 2;
         int CHANCE = 65 / RADIUS;
 
-        if (held.getItem() == REDSTONE.asItem() && !level.isClientSide()) {
-            if (!player.getAbilities().instabuild) {
-                held.shrink(1);
-            }
+        if (state.getBlock() instanceof CatalystBlock) {
+            if (held.getItem() == REDSTONE.asItem() && !level.isClientSide()) {
+                if (!player.getAbilities().instabuild) {
+                    held.shrink(1);
+                }
 
-            generateBlockPlacements(level, pos, RADIUS, CHANCE);
+                generateBlockPlacements(level, pos, RADIUS, CHANCE);
 
-            return InteractionResult.SUCCESS;
-        } else if (held.getItem() == ModItems.ACTIVATOR_WAND.get()) {
-            Direction direction = hit.getDirection().getOpposite();
-            int x = pos.getX();
-            int y = pos.getY();
-            int z = pos.getZ();
-            switch (direction.getName().toString()) {
-                case "up":
-                    ++y;
-                    break;
-                case "down":
-                    --y;
-                    break;
-                case "east":
-                    ++x;
-                    break;
-                case "west":
-                    --x;
-                    break;
-                case "north":
-                    --z;
-                    break;
-                case "south":
-                    ++z;
-                    break;
-            }
+                return InteractionResult.SUCCESS;
+            } else if (held.getItem() == ModItems.ACTIVATOR_WAND.get()) {
+                int x = pos.getX();
+                int y = pos.getY();
+                int z = pos.getZ();
+                switch (hit.getDirection().getOpposite().getName().toString()) {
+                    case "up":
+                        ++y;
+                        break;
+                    case "down":
+                        --y;
+                        break;
+                    case "east":
+                        ++x;
+                        break;
+                    case "west":
+                        --x;
+                        break;
+                    case "north":
+                        --z;
+                        break;
+                    case "south":
+                        ++z;
+                        break;
+                }
 
-            BlockPos newPos = new BlockPos(x, y, z);
+                BlockPos newPos = new BlockPos(x, y, z);
 
-            if (state.getBlock() instanceof CatalystBlock && held.getItem() == ModItems.ACTIVATOR_WAND.get()) {
                 if (level.getBlockState(newPos).isAir() && y <= level.getMaxBuildHeight() - 10 && y >= level.getMinBuildHeight() + 10) {
                     if (!level.isClientSide()) {
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS, 1);
@@ -139,11 +137,15 @@ public class AsurineCatalystBlock extends CatalystBlock {
 
                     if (level.isClientSide()) {
                         for (int i = 0; i < 2; ++i) {
-                            level.addParticle(ParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ(), (level.random.nextDouble() - 0.5D) * 2.0D, -level.random.nextDouble(), (level.random.nextDouble() - 0.5D) * 2.0D);
+                            level.addParticle(ParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ(), (RAND.nextDouble() - 0.5D) * 2.0D, -RAND.nextDouble(), (RAND.nextDouble() - 0.5D) * 2.0D);
                         }
                         player.playSound(SoundEvents.ENDERMAN_TELEPORT);
                     }
+
+                    return InteractionResult.SUCCESS;
                 }
+
+                return InteractionResult.FAIL;
             }
         }
 
