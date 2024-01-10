@@ -1,6 +1,9 @@
 package com.lithiumcraft.createresourcegeodes;
 
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.LoadingModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -21,19 +24,30 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        String[] modids = new String[]{"ae2"};
-        for (String modid : modids) {
-            if (mixinClassName.contains(modid) && isLoaded(modid)) {
-                return true;
-            }
+        if ("createresourcegeodes.mixins.AppEngMixin".equals(mixinClassName)) {
+            return isModLoaded("ae2");
         }
-        return false;
+        return true;
+//        String[] modids = new String[]{"ae2"};
+//        for (String modid : modids) {
+//            if (mixinClassName.contains(modid) && isLoaded(modid)) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     public static boolean isLoaded(String modid) {
         boolean isLoaded = FMLLoader.getLoadingModList().getModFileById(modid) != null;
         //System.out.println(modid+" : "+isLoaded);
         return isLoaded;
+    }
+
+    private static boolean isModLoaded(String modId) {
+        if (ModList.get() == null) {
+            return LoadingModList.get().getMods().stream().map(ModInfo::getModId).anyMatch(modId::equals);
+        }
+        return ModList.get().isLoaded(modId);
     }
 
     @Override

@@ -1,11 +1,7 @@
 package com.lithiumcraft.createresourcegeodes.block;
 
-import com.lithiumcraft.createresourcegeodes.item.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -14,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.TickEvent;
@@ -103,49 +98,6 @@ public class OchrumCatalystBlock extends CatalystBlock {
             generateBlockPlacements(level, pos, RADIUS, CHANCE);
 
             return InteractionResult.SUCCESS;
-        } else if (held.getItem() == ModItems.ACTIVATOR_WAND.get()) {
-            Direction direction = hit.getDirection().getOpposite();
-            int x = pos.getX();
-            int y = pos.getY();
-            int z = pos.getZ();
-            switch (direction.getName().toString()) {
-                case "up":
-                    ++y;
-                    break;
-                case "down":
-                    --y;
-                    break;
-                case "east":
-                    ++x;
-                    break;
-                case "west":
-                    --x;
-                    break;
-                case "north":
-                    --z;
-                    break;
-                case "south":
-                    ++z;
-                    break;
-            }
-
-            BlockPos newPos = new BlockPos(x, y, z);
-
-            if (state.getBlock() instanceof CatalystBlock && held.getItem() == ModItems.ACTIVATOR_WAND.get()) {
-                if (level.getBlockState(newPos).isAir() && y <= level.getMaxBuildHeight() - 10 && y >= level.getMinBuildHeight() + 10) {
-                    if (!level.isClientSide()) {
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS, 1);
-                        level.setBlock(newPos, state.getBlock().defaultBlockState(), Block.UPDATE_CLIENTS, 1);
-                    }
-
-                    if (level.isClientSide()) {
-                        for (int i = 0; i < 2; ++i) {
-                            level.addParticle(ParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ(), (level.random.nextDouble() - 0.5D) * 2.0D, -level.random.nextDouble(), (level.random.nextDouble() - 0.5D) * 2.0D);
-                        }
-                        player.playSound(SoundEvents.ENDERMAN_TELEPORT);
-                    }
-                }
-            }
         }
 
         return super.use(state, level, pos, player, hand, hit);

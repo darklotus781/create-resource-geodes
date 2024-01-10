@@ -1,0 +1,8 @@
+{
+  "catalyst_block_teleport": {
+    "subtitles": "sounds.createresourcegeodes.catalyst_block_teleport",
+    "sounds": [
+      "createresourcegeodes:catalyst_block_teleport"
+    ]
+  }
+}

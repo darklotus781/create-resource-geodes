@@ -16,9 +16,14 @@ public class Config
             .comment("Should we replace the mystery box inside AE2 Meteors with the Catalyst?")
             .define("replaceAe2Meteor", false);
 
+    private static final ForgeConfigSpec.IntValue MOVE_CATALYST_DISTANCE = BUILDER
+            .comment("How many blocks should a Catalyst Block be moved when right-clicked with the Activator Wand?")
+            .defineInRange("moveCatalystDistance", 1, 1, 64);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 //
     public static boolean replaceAe2Meteor;
+    public static int moveCatalystDistance;
 
     private static boolean validateItemName(final Object obj)
     {
@@ -29,5 +34,6 @@ public class Config
     static void onLoad(final ModConfigEvent event)
     {
         replaceAe2Meteor = REPLACE_AE2_METEOR.get();
+        moveCatalystDistance = MOVE_CATALYST_DISTANCE.get();
     }
 }

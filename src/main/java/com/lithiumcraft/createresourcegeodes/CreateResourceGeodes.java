@@ -3,6 +3,8 @@ package com.lithiumcraft.createresourcegeodes;
 import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
 import com.lithiumcraft.createresourcegeodes.item.ModCreativeModeTabs;
 import com.lithiumcraft.createresourcegeodes.item.ModItems;
+import com.lithiumcraft.createresourcegeodes.loot.ModLootModifiers;
+import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,10 +34,15 @@ public class CreateResourceGeodes {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModLootModifiers.register(modEventBus);
+
+        ModSounds.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
-        MinecraftForge.EVENT_BUS.register(new EventListener());
+//        MinecraftForge.EVENT_BUS.register(new EventListener());
 
+        MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);

@@ -12,7 +12,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, CreateResourceGeodes.MOD_ID);
 
     public static final RegistryObject<Item> ACTIVATOR_WAND = ITEMS.register("catalyst_activator_wand",
-            () -> new ActivatorWandItem(new Item.Properties().stacksTo(1)));
+            () -> new ActivatorWandItem(new Item.Properties().stacksTo(1).defaultDurability(100)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
