@@ -20,3 +20,12 @@ When reporting an issue put the version number before the issue title! Such as [
 |                                                         You can also find us on Discord for help<br>or just to chat!                                                          |
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | <a href="https://discord.gg/XH7zCjgUHb"><img src="https://discordapp.com/assets/fc0b01fe10a0b8c602fb0106d8189d9b.png" alt="Join us on Discord!"  width="200" height="68"></a> |
+
+
+
+
+###Obligatory License Information
+Some code was taken from the following repository and used under GPL v3
+This product is also released under the same license.
+https://github.com/CoolerGangster/CreateArcaneEngineeringCore
+Originally Modified by DarkLotus on 12/13/2023
