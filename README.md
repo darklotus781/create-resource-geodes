@@ -24,8 +24,8 @@ When reporting an issue put the version number before the issue title! Such as [
 
 
 
-###Obligatory License Information
-Some code was taken from the following repository and used under GPL v3
-This product is also released under the same license.
-https://github.com/CoolerGangster/CreateArcaneEngineeringCore
-Originally Modified by DarkLotus on 12/13/2023
+### Obligatory License Information
+Some code was taken from the following repository and used under GPL v3  
+This product is also released under the same license.  
+https://github.com/CoolerGangster/CreateArcaneEngineeringCore  
+Originally Modified by DarkLotus on 12/13/2023  
