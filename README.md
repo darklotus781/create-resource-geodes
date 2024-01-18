@@ -24,8 +24,8 @@ When reporting an issue put the version number before the issue title! Such as [
 
 
 
-### Obligatory License Information
-Some code was taken from the following repository and used under GPL v3  
-This product is also released under the same license.  
+**License Attribution**  
+Some of the code regarding Catalyst Activation and block placement was taken from the following repository under GPLv3.  
+The code was modified by DarkLotus on 12/13/2023 and all subsequent changes tracked through the commit log here in this repository.  
+Credit to @CoolerGangster for his work!  
 https://github.com/CoolerGangster/CreateArcaneEngineeringCore  
-Originally Modified by DarkLotus on 12/13/2023  
