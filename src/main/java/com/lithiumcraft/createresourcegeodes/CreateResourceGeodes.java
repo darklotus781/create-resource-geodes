@@ -40,8 +40,6 @@ public class CreateResourceGeodes {
 
         modEventBus.addListener(this::commonSetup);
 
-//        MinecraftForge.EVENT_BUS.register(new EventListener());
-
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
 

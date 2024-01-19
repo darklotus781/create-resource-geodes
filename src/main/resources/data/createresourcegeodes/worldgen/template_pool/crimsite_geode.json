@@ -8,7 +8,7 @@
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
         "location": "createresourcegeodes:crimsite_geode",
-        "processors": "minecraft:empty"
+        "processors": "createresourcegeodes:crimsite_processor"
       }
     }
   ]

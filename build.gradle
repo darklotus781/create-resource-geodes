@@ -103,6 +103,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:create-328085:4835191")
     implementation fg.deobf("curse.maven:applied-energistics-2-223794:4857895")
+    implementation fg.deobf("curse.maven:worldedit-225608:4586218") // for dev purposes
 
 
 
