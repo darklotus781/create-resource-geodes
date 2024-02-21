@@ -24,7 +24,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if ("createresourcegeodes.mixins.AppEngMixin".equals(mixinClassName)) {
+        if ("createresourcegeodes.mixin.AppEngMixin".equals(mixinClassName)) {
             return isModLoaded("ae2");
         }
         return true;
