@@ -34,15 +34,15 @@ public class ModBlocks {
     public static final RegistryObject<Block> FAUX_SKY_STONE = registerBlock("faux_sky_stone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops().strength(1.5F).mapColor(MapColor.TERRACOTTA_BLACK)));
     public static final RegistryObject<Block> ASURINE_CATALYST = registerBlock("asurine_catalyst",
-            () -> new AsurineCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.COLOR_BLUE).noLootTable()));
+            () -> new AsurineCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.COLOR_BLUE).noLootTable().randomTicks()));
     public static final RegistryObject<Block> CRIMSITE_CATALYST = registerBlock("crimsite_catalyst",
-            () -> new CrimsiteCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.COLOR_RED).noLootTable()));
+            () -> new CrimsiteCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.COLOR_RED).noLootTable().randomTicks()));
     public static final RegistryObject<Block> OCHRUM_CATALYST = registerBlock("ochrum_catalyst",
-            () -> new OchrumCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_YELLOW).noLootTable()));
+            () -> new OchrumCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_YELLOW).noLootTable().randomTicks()));
     public static final RegistryObject<Block> VERIDIUM_CATALYST = registerBlock("veridium_catalyst",
-            () -> new VeridiumCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.WARPED_NYLIUM).noLootTable()));
+            () -> new VeridiumCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.WARPED_NYLIUM).noLootTable().randomTicks()));
     public static final RegistryObject<Block> SKY_STONE_CATALYST = registerBlock("sky_stone_catalyst",
-            () -> new SkyStoneCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_BLACK).noLootTable()));
+            () -> new SkyStoneCatalystBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_BLACK).noLootTable().randomTicks()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
