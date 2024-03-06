@@ -24,5 +24,19 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.OCHRUM_CATALYST.get())
                 .add(ModBlocks.VERIDIUM_CATALYST.get())
                 .add(ModBlocks.SKY_STONE_CATALYST.get());
+
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.FAUX_ASURINE.get(),
+                        ModBlocks.FAUX_CRIMSITE.get(),
+                        ModBlocks.FAUX_OCHRUM.get(),
+                        ModBlocks.FAUX_VERIDIUM.get(),
+                        ModBlocks.FAUX_SKY_STONE.get());
+
+        this.tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.FAUX_ASURINE.get(),
+                        ModBlocks.FAUX_CRIMSITE.get(),
+                        ModBlocks.FAUX_OCHRUM.get(),
+                        ModBlocks.FAUX_VERIDIUM.get(),
+                        ModBlocks.FAUX_SKY_STONE.get());
     }
 }

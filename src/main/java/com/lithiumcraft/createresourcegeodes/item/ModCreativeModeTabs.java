@@ -15,7 +15,7 @@ public class ModCreativeModeTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CreateResourceGeodes.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> CREATERESOURCEGEODES_TAB = CREATIVE_MODE_TABS.register("createresourcegeodes_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.CRIMSITE_CATALYST.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.ACTIVATOR_WAND.get()))
                     .title(Component.translatable("creativetab.createresourcegeodes_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ASURINE_CATALYST.get());
@@ -23,6 +23,11 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.OCHRUM_CATALYST.get());
                         pOutput.accept(ModBlocks.VERIDIUM_CATALYST.get());
                         pOutput.accept(ModBlocks.SKY_STONE_CATALYST.get());
+                        pOutput.accept(ModBlocks.FAUX_ASURINE.get());
+                        pOutput.accept(ModBlocks.FAUX_CRIMSITE.get());
+                        pOutput.accept(ModBlocks.FAUX_OCHRUM.get());
+                        pOutput.accept(ModBlocks.FAUX_VERIDIUM.get());
+                        pOutput.accept(ModBlocks.FAUX_SKY_STONE.get());
                         pOutput.accept(ModItems.ACTIVATOR_WAND.get());
                     })
                     .build());

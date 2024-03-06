@@ -50,6 +50,10 @@ public class Config
             .comment("Warning!!!  Setting this percentage too high could have negative side effects, especially on a server!")
             .defineInRange("catalystFillPercentage", 0.12, 0.01, 1.00);
 
+    private static final ForgeConfigSpec.BooleanValue CATALYST_MOVE_IGNORE_WATER = BUILDER
+            .comment("Can a Catalyst move into a Water Source or Flowing Water block?")
+            .define("catalystMoveIgnoreWater", false);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 //
     public static boolean replaceAe2Meteor;
@@ -59,8 +63,8 @@ public class Config
     public static int ochrumCatalystRadius;
     public static int veridiumCatalystRadius;
     public static int skystoneCatalystRadius;
-
     public static double catalystFillPercentage;
+    public static boolean catalystMoveIgnoreWater;
 
     private static boolean validateItemName(final Object obj)
     {
@@ -78,5 +82,6 @@ public class Config
         veridiumCatalystRadius = VERIDIUM_CATALYST_PLACEMENT_SIZE.get();
         skystoneCatalystRadius = SKYSTONE_CATALYST_PLACEMENT_SIZE.get();
         catalystFillPercentage = CATALYST_FILL_PERCENTAGE.get();
+        catalystMoveIgnoreWater = CATALYST_MOVE_IGNORE_WATER.get();
     }
 }

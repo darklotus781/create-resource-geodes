@@ -52,12 +52,24 @@ public class CreateResourceGeodes {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+        if (event.getTabKey() == CreativeModeTabs.OP_BLOCKS) {
             event.accept(ModBlocks.ASURINE_CATALYST);
             event.accept(ModBlocks.CRIMSITE_CATALYST);
             event.accept(ModBlocks.OCHRUM_CATALYST);
             event.accept(ModBlocks.VERIDIUM_CATALYST);
             event.accept(ModBlocks.SKY_STONE_CATALYST);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(ModBlocks.FAUX_ASURINE);
+            event.accept(ModBlocks.FAUX_CRIMSITE);
+            event.accept(ModBlocks.FAUX_OCHRUM);
+            event.accept(ModBlocks.FAUX_VERIDIUM);
+            event.accept(ModBlocks.FAUX_SKY_STONE);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(ModItems.ACTIVATOR_WAND);
         }
     }
 }

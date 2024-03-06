@@ -61,7 +61,8 @@ public class ActivatorWandItem extends Item {
 
             BlockPos newPos = new BlockPos(x, y, z);
 
-            if (level.getBlockState(newPos).isAir() && y <= level.getMaxBuildHeight() - 10 && y >= level.getMinBuildHeight() + 10) {
+            // If new block is water and config allows moving catalyst into water, or If new block is air and coords within build height, do it!
+            if (((Config.catalystMoveIgnoreWater && level.getBlockState(newPos).is(Blocks.WATER)) || level.getBlockState(newPos).isAir()) && y <= level.getMaxBuildHeight() - 10 && y >= level.getMinBuildHeight() + 10) {
                 if (!level.isClientSide()) {
                     level.setBlock(positionClicked, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS, 1);
                     level.setBlock(newPos, state.getBlock().defaultBlockState(), Block.UPDATE_CLIENTS, 1);
