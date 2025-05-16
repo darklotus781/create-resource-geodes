@@ -25,8 +25,23 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.OCHRUM_CATALYST);
                         output.accept(ModBlocks.VERIDIUM_CATALYST);
                         output.accept(ModBlocks.SKY_STONE_CATALYST);
+                        output.accept(ModBlocks.GENERIC_CATALYST_1);
+                        output.accept(ModBlocks.GENERIC_CATALYST_2);
+                        output.accept(ModBlocks.GENERIC_CATALYST_3);
+                        output.accept(ModBlocks.GENERIC_CATALYST_4);
+                        output.accept(ModBlocks.GENERIC_CATALYST_5);
+                        output.accept(ModBlocks.GENERIC_CATALYST_6);
+                        output.accept(ModBlocks.GENERIC_CATALYST_7);
+                        output.accept(ModBlocks.GENERIC_CATALYST_8);
+                        output.accept(ModBlocks.GENERIC_CATALYST_9);
+                        output.accept(ModBlocks.GENERIC_CATALYST_10);
+                        output.accept(ModBlocks.GENERIC_CATALYST_11);
+                        output.accept(ModBlocks.GENERIC_CATALYST_12);
                         output.accept(ModItems.ACTIVATOR_WAND);
                         output.accept(ModItems.CATALYST_AGITATOR);
+                        output.accept(ModItems.CATALYST_AGITATOR_TIER_2);
+                        output.accept(ModItems.CATALYST_AGITATOR_TIER_3);
+                        output.accept(ModItems.CATALYST_AGITATOR_TIER_4);
                         output.accept(ModItems.CATALYST_CORE);
                     }).build());
 

@@ -1,9 +1,7 @@
 package com.lithiumcraft.createresourcegeodes.item;
 
 import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
-import com.lithiumcraft.createresourcegeodes.item.custom.ActivatorWandItem;
-import com.lithiumcraft.createresourcegeodes.item.custom.CatalystAgitatorItem;
-import net.minecraft.core.component.DataComponents;
+import com.lithiumcraft.createresourcegeodes.item.custom.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
@@ -25,13 +23,22 @@ public class ModItems {
             });
 
     public static final DeferredItem<Item> CATALYST_AGITATOR = ITEMS.register("catalyst_agitator",
-            () -> new CatalystAgitatorItem(new Item.Properties().stacksTo(64)) {
+            () -> new CatalystAgitatorTier1Item(new Item.Properties().rarity(Rarity.COMMON)) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_agitator.tooltip"));
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
             });
+
+    public static final DeferredItem<Item> CATALYST_AGITATOR_TIER_2 = ITEMS.register("catalyst_agitator_tier_2",
+            () -> new CatalystAgitatorTier2Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+    public static final DeferredItem<Item> CATALYST_AGITATOR_TIER_3 = ITEMS.register("catalyst_agitator_tier_3",
+            () -> new CatalystAgitatorTier3Item(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<Item> CATALYST_AGITATOR_TIER_4 = ITEMS.register("catalyst_agitator_tier_4",
+            () -> new CatalystAgitatorTier4Item(new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final DeferredItem<Item> CATALYST_CORE = ITEMS.register("catalyst_core",
             () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)) {

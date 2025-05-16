@@ -17,6 +17,10 @@ public class Config
             .comment("Should we replace the mystery box inside AE2 Meteors with the Catalyst?")
             .define("replaceAe2Meteor", false);
 
+    private static final ModConfigSpec.BooleanValue CATALYST_WAND_DURABILITY = BUILDER
+            .comment("Does the Catalyst Wand have durability?")
+            .define("catalystWandDurability", true);
+
     private static final ModConfigSpec.IntValue MOVE_CATALYST_DISTANCE = BUILDER
             .comment("How many blocks should a Catalyst Block be moved when right-clicked with the Activator Wand?")
             .defineInRange("moveCatalystDistance", 3, 1, 32);
@@ -46,6 +50,7 @@ public class Config
     static final ModConfigSpec SPEC = BUILDER.build();
 //
     public static boolean replaceAe2Meteor;
+    public static boolean catalystWandDurability;
     public static int moveCatalystDistance;
 //    public static int catalystRadius;
     public static int catalystBlocksPerTick;
@@ -63,6 +68,7 @@ public class Config
     static void onLoad(final ModConfigEvent event)
     {
         replaceAe2Meteor = REPLACE_AE2_METEOR.get();
+        catalystWandDurability = CATALYST_WAND_DURABILITY.get();
         moveCatalystDistance = MOVE_CATALYST_DISTANCE.get();
 //        catalystRadius = CATALYST_PLACEMENT_SIZE.get();
 //        catalystFillPercentage = CATALYST_FILL_PERCENTAGE.get();

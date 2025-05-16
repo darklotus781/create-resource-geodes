@@ -14,6 +14,7 @@ public class ModSounds {
             DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, CreateResourceGeodes.MOD_ID);
 
     public static final Supplier<SoundEvent> CATALYST_BLOCK_TELEPORT = registerSoundEvent("catalyst_block_teleport");
+    public static final Supplier<SoundEvent> AGITATOR_INVALID_TIER = registerSoundEvent("agitator_invalid_tier");
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(CreateResourceGeodes.MOD_ID, name);

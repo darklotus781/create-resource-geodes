@@ -38,19 +38,21 @@ public class ActivatorWandItem extends Item {
         super(new Item.Properties().stacksTo(1).durability(65).rarity(Rarity.RARE));
     }
 
+
+
     @Override
     public boolean isEnchantable(ItemStack stack) {
-        return true; // allows enchanting at a table
+        return Config.catalystWandDurability; // allows enchanting at a table
     }
 
     @Override
     public int getEnchantmentValue() {
-        return 15; // controls enchantment quality
+        return Config.catalystWandDurability ? 15 : 0;// controls enchantment quality
     }
 
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return true; // allows use with enchanted books in an anvil
+        return Config.catalystWandDurability;// allows use with enchanted books in an anvil
     }
 
     @Override
@@ -123,13 +125,11 @@ public class ActivatorWandItem extends Item {
                 }
 
 
-                // This will apply durability damage AND respect Unbreaking enchantments
-                context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
+                if (Config.catalystWandDurability) {
 
-                // Reduce durability and broadcast break event
-//context.getItemInHand().hurtAndBreak(1, ((ServerLevel) level), context.getPlayer(),
-//        item -> context.getPlayer().onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
-
+                    // This will apply durability damage AND respect Unbreaking enchantments
+                    context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
+                }
 
                 context.getPlayer().getCooldowns().addCooldown(this, 20);
             }

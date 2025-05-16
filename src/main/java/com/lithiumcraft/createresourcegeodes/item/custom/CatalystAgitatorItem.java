@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Hashtable;
 
+@Deprecated
 public class CatalystAgitatorItem extends Item {
 
     private static final Logger LOGGER = LogUtils.getLogger();

@@ -4,5 +4,11 @@
     "sounds": [
       "createresourcegeodes:catalyst_block_teleport"
     ]
+  },
+  "agitator_invalid_tier": {
+    "subtitles": "sounds.createresourcegeodes.agitator_invalid_tier",
+    "sounds": [
+      "createresourcegeodes:agitator_invalid_tier"
+    ]
   }
 }
