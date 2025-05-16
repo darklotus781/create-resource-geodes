@@ -1,9 +1,12 @@
 # [0.2.1]  
 ### Additions
 - [Added Data Driven Catalysts](https://github.com/darklotus781/create-resource-geodes/wiki/Data-Driven-Catalysts-%E2%80%90-for-modpack-makers!)
+- Added Tiered Agitator Items for modpack makers
+- Added config option for Wand Durability
 
 ### Changes
 - Removed the FAUX blocks, they are no longer needed.
+- Removed other config options and moved to data handlers
 
 ---
 
