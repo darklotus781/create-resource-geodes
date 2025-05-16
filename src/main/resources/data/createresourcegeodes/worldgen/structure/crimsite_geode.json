@@ -5,7 +5,7 @@
   "spawn_overrides": {},
   "start_pool": "createresourcegeodes:crimsite_geode",
   "size": 3,
-  "terrain_adaptation": "buried",
+  "terrain_adaptation": "bury",
   "start_height": {
     "absolute": -32
   },

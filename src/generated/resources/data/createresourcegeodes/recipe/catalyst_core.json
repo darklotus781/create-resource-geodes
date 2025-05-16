@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "W": {
+      "item": "createresourcegeodes:catalyst_activator_wand"
+    }
+  },
+  "pattern": [
+    "SDS",
+    "DWD",
+    "SDS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createresourcegeodes:catalyst_core"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
-  "loader": "forge:separate_transforms",
+  "loader": "neoforge:separate_transforms",
   "base": {
     "parent": "createresourcegeodes:item/catalyst_activator_wand_3d"
   },
@@ -14,5 +14,13 @@
     "fixed": {
       "parent": "createresourcegeodes:item/catalyst_activator_wand_2d"
     }
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.95
+      },
+      "model": "createresourcegeodes:item/catalyst_activator_wand_broken"
+    }
+  ]
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "create:veridium"
+    },
+    "W": {
+      "item": "createresourcegeodes:catalyst_core"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BWB",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createresourcegeodes:veridium_catalyst"
+  }
+}

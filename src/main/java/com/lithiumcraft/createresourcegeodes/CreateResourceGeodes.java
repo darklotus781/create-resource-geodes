@@ -4,72 +4,79 @@ import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
 import com.lithiumcraft.createresourcegeodes.item.ModCreativeModeTabs;
 import com.lithiumcraft.createresourcegeodes.item.ModItems;
 import com.lithiumcraft.createresourcegeodes.loot.ModLootModifiers;
+import com.lithiumcraft.createresourcegeodes.registry.ModRegistries;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import org.slf4j.Logger;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(CreateResourceGeodes.MOD_ID)
 public class CreateResourceGeodes {
-
-    // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "createresourcegeodes";
-    // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public CreateResourceGeodes() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    // The constructor for the mod class is the first code that is run when your mod is loaded.
+    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
+
+    public CreateResourceGeodes(IEventBus modEventBus, ModContainer modContainer) {
+// Register the commonSetup method for modloading
+        modEventBus.addListener(this::commonSetup);
+
+        // Register ourselves for server and other game events we are interested in.
+        // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
+        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+//        NeoForge.EVENT_BUS.register(this);
 
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
-        ModLootModifiers.register(modEventBus);
-
         ModSounds.register(modEventBus);
 
-        modEventBus.addListener(this::commonSetup);
+        ModLootModifiers.register(modEventBus);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        ModRegistries.register(modEventBus);
+
+        // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
+        CatalystDebugLogger.register();
     }
 
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        if (event.getTabKey() == CreativeModeTabs.OP_BLOCKS) {
-            event.accept(ModBlocks.ASURINE_CATALYST);
-            event.accept(ModBlocks.CRIMSITE_CATALYST);
-            event.accept(ModBlocks.OCHRUM_CATALYST);
-            event.accept(ModBlocks.VERIDIUM_CATALYST);
-            event.accept(ModBlocks.SKY_STONE_CATALYST);
+    // Add the example block item to the building blocks tab
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        //
+    }
+
+    public class CatalystDebugLogger {
+        public static void register() {
+            NeoForge.EVENT_BUS.register(CatalystDebugLogger.class);
         }
 
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(ModBlocks.FAUX_ASURINE);
-            event.accept(ModBlocks.FAUX_CRIMSITE);
-            event.accept(ModBlocks.FAUX_OCHRUM);
-            event.accept(ModBlocks.FAUX_VERIDIUM);
-            event.accept(ModBlocks.FAUX_SKY_STONE);
-        }
+        @SubscribeEvent
+        public static void onServerStarted(ServerStartedEvent event) {
+            var level = event.getServer().overworld();
+            var registry = level.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
 
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.accept(ModItems.ACTIVATOR_WAND);
+            System.out.println("[CatalystDebug] Registry size: " + registry.size());
+
+            System.out.println("[CatalystDebug] === Catalyst Datapack Entries ===");
+            registry.keySet().forEach(key -> System.out.println(" - " + key));
         }
     }
 }

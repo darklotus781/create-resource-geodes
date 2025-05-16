@@ -5,11 +5,14 @@ import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
+
+import static com.simibubi.create.foundation.data.BlockStateGen.cubeAll;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -23,28 +26,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.OCHRUM_CATALYST);
         blockWithItem(ModBlocks.VERIDIUM_CATALYST);
         blockWithItem(ModBlocks.SKY_STONE_CATALYST);
-        blockWithItem(ModBlocks.FAUX_ASURINE);
-        blockWithItem(ModBlocks.FAUX_CRIMSITE);
-        blockWithItem(ModBlocks.FAUX_OCHRUM);
-        blockWithItem(ModBlocks.FAUX_VERIDIUM);
-        blockWithItem(ModBlocks.FAUX_SKY_STONE);
     }
 
-    private String name(Block block) {
-        return key(block).getPath();
+    private void blockWithItem(DeferredBlock<?> deferredBlock) {
+        simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
     }
 
-    private ResourceLocation key(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block);
+    private void blockItem(DeferredBlock<?> deferredBlock) {
+        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("createresourcegeodes:block/" + deferredBlock.getId().getPath()));
     }
 
-    private void blockItem(RegistryObject<Block> blockRegistryObject) {
-        simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(CreateResourceGeodes.MOD_ID +
-                ":block/" + ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath()));
-    }
-
-    private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
-        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
+    private void blockItem(DeferredBlock<?> deferredBlock, String appendix) {
+        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("createresourcegeodes:block/" + deferredBlock.getId().getPath() + appendix));
     }
 
 }

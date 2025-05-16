@@ -1,5 +1,6 @@
 # Create: Resource Geodes
-This is a Minecraft Mod for Forge 1.20.1
+This is a Minecraft Mod for Forge 1.20.1  
+Also NeoForge 1.21.1  
 This mod adds Geodes underground in Ocean Biomes.  These Geodes contain Asurine, Crimsite, Ochrum and Veridium.  
 Geodes are wrapped in Coal Blocks and at the heart is a Catalyst block.  Using redstone dust on the block will generate more Ore Stones in a Sphere around the Catalyst but only taking the place of Air blocks.  
 The Sphere Radius and Fill Percentage are customizable in the configs.  

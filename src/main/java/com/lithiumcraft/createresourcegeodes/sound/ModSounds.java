@@ -1,21 +1,23 @@
 package com.lithiumcraft.createresourcegeodes.sound;
 
 import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, CreateResourceGeodes.MOD_ID);
+            DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, CreateResourceGeodes.MOD_ID);
 
-    public static final RegistryObject<SoundEvent> CATALYST_BLOCK_TELEPORT = registerSoundEvents("catalyst_block_teleport");
+    public static final Supplier<SoundEvent> CATALYST_BLOCK_TELEPORT = registerSoundEvent("catalyst_block_teleport");
 
-    private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
-        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(CreateResourceGeodes.MOD_ID, name)));
+    private static Supplier<SoundEvent> registerSoundEvent(String name) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(CreateResourceGeodes.MOD_ID, name);
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 
     public static void register(IEventBus eventBus) {

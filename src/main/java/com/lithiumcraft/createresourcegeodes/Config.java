@@ -1,74 +1,62 @@
 package com.lithiumcraft.createresourcegeodes;
 
+import com.lithiumcraft.createresourcegeodes.config.CatalystShape;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-@Mod.EventBusSubscriber(modid = CreateResourceGeodes.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = CreateResourceGeodes.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class Config
 {
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ForgeConfigSpec.BooleanValue REPLACE_AE2_METEOR = BUILDER
+    private static final ModConfigSpec.BooleanValue REPLACE_AE2_METEOR = BUILDER
             .comment("Should we replace the mystery box inside AE2 Meteors with the Catalyst?")
             .define("replaceAe2Meteor", false);
 
-    private static final ForgeConfigSpec.IntValue MOVE_CATALYST_DISTANCE = BUILDER
+    private static final ModConfigSpec.IntValue MOVE_CATALYST_DISTANCE = BUILDER
             .comment("How many blocks should a Catalyst Block be moved when right-clicked with the Activator Wand?")
-            .defineInRange("moveCatalystDistance", 1, 1, 32);
+            .defineInRange("moveCatalystDistance", 3, 1, 32);
 
-    private static final ForgeConfigSpec.IntValue ASURINE_CATALYST_PLACEMENT_SIZE = BUILDER
-            .comment("Radius in blocks for generating Asurine around the Catalyst")
-            .comment("Warning!!!  Setting this diameter too large could have negative side effects, especially on a server!")
-            .defineInRange("asurineCatalystRadius", 6, 1,17);
+    private static final ModConfigSpec.IntValue CATALYST_BLOCKS_PER_TICK = BUILDER
+            .comment("How many blocks should be generated per tick, there's 20 ticks in a second, so keep that in mind!")
+            .defineInRange("catalystBlocksPerTick", 5, 1, 100);
 
-    private static final ForgeConfigSpec.IntValue CRIMSITE_CATALYST_PLACEMENT_SIZE = BUILDER
-            .comment("Radius in blocks for generating Crimsite around the Catalyst.")
-            .comment("Warning!!!  Setting this diameter too large could have negative side effects, especially on a server!")
-            .defineInRange("crimsiteCatalystRadius", 11, 3,27);
+//    private static final ModConfigSpec.IntValue CATALYST_PLACEMENT_SIZE = BUILDER
+//            .comment("Radius in blocks for generating BLocks around the Catalyst")
+//            .comment("Warning!!!  Setting this diameter too large could have negative side effects, especially on a server!")
+//            .defineInRange("catalystRadius", 6, 1,17);
 
-    private static final ForgeConfigSpec.IntValue OCHRUM_CATALYST_PLACEMENT_SIZE = BUILDER
-            .comment("Radius in blocks for generating Ochrum around the Catalyst.")
-            .comment("Warning!!!  Setting this diameter too large could have negative side effects, especially on a server!")
-            .defineInRange("ochrumCatalystRadius", 6, 1,17);
+//    private static final ModConfigSpec.DoubleValue CATALYST_FILL_PERCENTAGE = BUILDER
+//            .comment("What percentage of the generated cube of blocks should actually be filled?")
+//            .comment("Warning!!!  Setting this percentage too high could have negative side effects, especially on a server!")
+//            .defineInRange("catalystFillPercentage", 0.7, 0.1, 1.0);
 
-    private static final ForgeConfigSpec.IntValue VERIDIUM_CATALYST_PLACEMENT_SIZE = BUILDER
-            .comment("Radius in blocks for generating Veridium around the Catalyst.")
-            .comment("Warning!!!  Setting this diameter too large could have negative side effects, especially on a server!")
-            .defineInRange("veridiumCatalystRadius", 6, 1,17);
-
-    private static final ForgeConfigSpec.IntValue SKYSTONE_CATALYST_PLACEMENT_SIZE = BUILDER
-            .comment("Radius in blocks for generating Sky Stone around the Catalyst.")
-            .comment("Warning!!!  Setting this diameter too large could have negative side effects, especially on a server!")
-            .defineInRange("skystoneCatalystRadius", 6, 1,17);
-
-    private static final ForgeConfigSpec.DoubleValue CATALYST_FILL_PERCENTAGE = BUILDER
-            .comment("What percentage of the generated cube of blocks should actually be filled?")
-            .comment("Warning!!!  Setting this percentage too high could have negative side effects, especially on a server!")
-            .defineInRange("catalystFillPercentage", 0.12, 0.01, 1.00);
-
-    private static final ForgeConfigSpec.BooleanValue CATALYST_MOVE_IGNORE_WATER = BUILDER
+    private static final ModConfigSpec.BooleanValue CATALYST_MOVE_IGNORE_WATER = BUILDER
             .comment("Can a Catalyst move into a Water Source or Flowing Water block?")
-            .define("catalystMoveIgnoreWater", false);
+            .define("catalystMoveIgnoreWater", true);
 
-    static final ForgeConfigSpec SPEC = BUILDER.build();
+//    private static final ModConfigSpec.EnumValue<CatalystShape> CATALYST_SHAPE = BUILDER
+//            .comment("The shape used when generating blocks around the Catalyst.")
+//            .defineEnum("catalystShape", CatalystShape.SPHERE);
+
+    static final ModConfigSpec SPEC = BUILDER.build();
 //
     public static boolean replaceAe2Meteor;
     public static int moveCatalystDistance;
-    public static int asurineCatalystRadius;
-    public static int crimsiteCatalystRadius;
-    public static int ochrumCatalystRadius;
-    public static int veridiumCatalystRadius;
-    public static int skystoneCatalystRadius;
-    public static double catalystFillPercentage;
+//    public static int catalystRadius;
+    public static int catalystBlocksPerTick;
+//    public static double catalystFillPercentage;
     public static boolean catalystMoveIgnoreWater;
+//    public static CatalystShape catalystShape;
+
 
     private static boolean validateItemName(final Object obj)
     {
-        return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
+        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
     }
 
     @SubscribeEvent
@@ -76,12 +64,10 @@ public class Config
     {
         replaceAe2Meteor = REPLACE_AE2_METEOR.get();
         moveCatalystDistance = MOVE_CATALYST_DISTANCE.get();
-        asurineCatalystRadius = ASURINE_CATALYST_PLACEMENT_SIZE.get();
-        crimsiteCatalystRadius = CRIMSITE_CATALYST_PLACEMENT_SIZE.get();
-        ochrumCatalystRadius = OCHRUM_CATALYST_PLACEMENT_SIZE.get();
-        veridiumCatalystRadius = VERIDIUM_CATALYST_PLACEMENT_SIZE.get();
-        skystoneCatalystRadius = SKYSTONE_CATALYST_PLACEMENT_SIZE.get();
-        catalystFillPercentage = CATALYST_FILL_PERCENTAGE.get();
+//        catalystRadius = CATALYST_PLACEMENT_SIZE.get();
+//        catalystFillPercentage = CATALYST_FILL_PERCENTAGE.get();
         catalystMoveIgnoreWater = CATALYST_MOVE_IGNORE_WATER.get();
+//        catalystShape = CATALYST_SHAPE.get();
+        catalystBlocksPerTick = CATALYST_BLOCKS_PER_TICK.get();
     }
 }

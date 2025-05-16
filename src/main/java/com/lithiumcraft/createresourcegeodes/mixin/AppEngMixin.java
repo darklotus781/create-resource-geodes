@@ -1,6 +1,5 @@
 package com.lithiumcraft.createresourcegeodes.mixin;
 
-import appeng.block.misc.MysteriousCubeBlock;
 import appeng.core.AEConfig;
 import appeng.core.definitions.AEBlocks;
 import appeng.worldgen.meteorite.MeteoriteBlockPutter;
@@ -35,7 +34,7 @@ public abstract class AppEngMixin {
     private void placeChest() {
         BlockState meteorBlock = Config.replaceAe2Meteor ?
                 ModBlocks.SKY_STONE_CATALYST.get().defaultBlockState() :
-                ((MysteriousCubeBlock) AEBlocks.MYSTERIOUS_CUBE.block()).defaultBlockState();
+                AEBlocks.MYSTERIOUS_CUBE.block().defaultBlockState();
         if (AEConfig.instance().isSpawnPressesInMeteoritesEnabled()) {
             this.putter.put(this.level, this.pos, meteorBlock);
         }
