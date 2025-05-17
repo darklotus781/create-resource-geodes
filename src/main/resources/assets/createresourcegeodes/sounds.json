@@ -10,5 +10,11 @@
     "sounds": [
       "createresourcegeodes:agitator_invalid_tier"
     ]
+  },
+  "dont_be_a_bot": {
+    "subtitles": "sounds.createresourcegeodes.tube_is_a_bot",
+    "sounds": [
+      "createresourcegeodes:dontbeabot"
+    ]
   }
 }

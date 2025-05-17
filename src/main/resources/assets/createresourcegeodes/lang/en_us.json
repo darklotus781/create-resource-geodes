@@ -1,5 +1,6 @@
 {
     "creativetab.createresourcegeodes_tab": "Create: Resource Geodes",
+    "config.jade.plugin_createresourcegeodes.catalyst_tooltip": "Catalyst Tooltip",
     "tooltip.createresourcegeodes.catalyst_core.tooltip": "Used for creating your own Catalysts",
     "tooltip.createresourcegeodes.catalyst_agitator.tooltip": "Deploy this mysterious powder on a Catalyst",
     "tooltip.createresourcegeodes.catalyst_activator_wand.tooltip": "Used for crafting and moving Catalysts",
@@ -16,6 +17,7 @@
     "item.createresourcegeodes.catalyst_core": "Catalyst Core",
     "sounds.createresourcegeodes.catalyst_block_teleport": "Catalyst Teleports",
     "sounds.createresourcegeodes.agitator_invalid_tier": "Catalyst not agitated",
+    "sounds.createresourcegeodes.tube_is_a_bot": "Tube's a Bot!",
     "block.createresourcegeodes.generic_catalyst_1": "Generic Catalyst 1",
     "block.createresourcegeodes.generic_catalyst_2": "Generic Catalyst 2",
     "block.createresourcegeodes.generic_catalyst_3": "Generic Catalyst 3",

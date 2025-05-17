@@ -1,9 +1,11 @@
 package com.lithiumcraft.createresourcegeodes;
 
 import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
+import com.lithiumcraft.createresourcegeodes.block.entity.ModBlockEntities;
 import com.lithiumcraft.createresourcegeodes.item.ModCreativeModeTabs;
 import com.lithiumcraft.createresourcegeodes.item.ModItems;
 import com.lithiumcraft.createresourcegeodes.loot.ModLootModifiers;
+import com.lithiumcraft.createresourcegeodes.network.ModNetwork;
 import com.lithiumcraft.createresourcegeodes.registry.ModRegistries;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.mojang.logging.LogUtils;
@@ -42,11 +44,16 @@ public class CreateResourceGeodes {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+
         ModSounds.register(modEventBus);
 
         ModLootModifiers.register(modEventBus);
 
         ModRegistries.register(modEventBus);
+
+        modEventBus.addListener(ModNetwork::registerPackets);
+
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

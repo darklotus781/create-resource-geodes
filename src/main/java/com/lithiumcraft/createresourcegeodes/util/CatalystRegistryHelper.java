@@ -20,4 +20,10 @@ public class CatalystRegistryHelper {
         CatalystGeneratorDefinition def = registry.get(id);
         return def != null ? def.cooldownTicks() : 120;
     }
+
+    public static int getMinimumTier(ServerLevel level, ResourceLocation id) {
+        var registry = level.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
+        CatalystGeneratorDefinition def = registry.get(id);
+        return def != null ? def.minimumTier() : 1;
+    }
 }

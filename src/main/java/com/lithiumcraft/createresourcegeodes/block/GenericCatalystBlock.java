@@ -1,5 +1,6 @@
 package com.lithiumcraft.createresourcegeodes.block;
 
+import com.lithiumcraft.createresourcegeodes.block.entity.CatalystBlock;
 import com.lithiumcraft.createresourcegeodes.config.CatalystShape;
 import com.lithiumcraft.createresourcegeodes.registry.ModRegistries;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;

@@ -1,3 +1,16 @@
+# [0.2.2]
+### Changes
+- Added Jade compat for Catalysts to see Tier Requirement and Cooldown timer
+
+
+---
+
+# [0.2.2]
+### Changes
+- Added sound effects to improper attempt to activate catalyst with lower tier agitator
+
+---
+
 # [0.2.1]  
 ### Additions
 - [Added Data Driven Catalysts](https://github.com/darklotus781/create-resource-geodes/wiki/Data-Driven-Catalysts-%E2%80%90-for-modpack-makers!)

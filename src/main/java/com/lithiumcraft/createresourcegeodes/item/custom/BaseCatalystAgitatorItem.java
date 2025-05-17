@@ -1,5 +1,6 @@
 package com.lithiumcraft.createresourcegeodes.item.custom;
 
+import com.lithiumcraft.createresourcegeodes.block.entity.CatalystBlockEntity;
 import com.lithiumcraft.createresourcegeodes.config.CatalystAgitatorTier;
 import com.lithiumcraft.createresourcegeodes.config.CatalystShape;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
@@ -7,6 +8,7 @@ import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import com.lithiumcraft.createresourcegeodes.util.CatalystShapeTasks;
 import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,10 +24,13 @@ import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class BaseCatalystAgitatorItem extends Item {
     private static final Logger LOGGER = LogUtils.getLogger();
     protected static final Map<BlockPos, Long> lastUseTimestamps = new HashMap<>();
+    private static final Map<UUID, Map<BlockPos, Integer>> failureCounts = new HashMap<>();
+
 
     public BaseCatalystAgitatorItem(Properties properties) {
         super(properties);
@@ -59,12 +64,35 @@ public abstract class BaseCatalystAgitatorItem extends Item {
         }
 
         if (agitatorTier.getLevel() < requiredTier) {
-            serverLevel.playSound(null, pos, ModSounds.AGITATOR_INVALID_TIER.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
-            serverLevel.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.01);
+            UUID playerId = player.getUUID();
+            Map<BlockPos, Integer> blockFailures = failureCounts.computeIfAbsent(playerId, k -> new HashMap<>());
+            int fails = blockFailures.getOrDefault(pos, 0);
+
+            if (fails < 10) {
+                // Play sound for attempts < 10
+                SoundEvent sound = (fails == 9)
+                        ? ModSounds.DONT_BE_A_BOT.get() // 10th failed attempt
+                        : ModSounds.AGITATOR_INVALID_TIER.get();
+
+                serverLevel.playSound(null, pos, sound, SoundSource.BLOCKS, 1f, 1f);
+                serverLevel.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.01);
+
+                // Increment and store failure count
+                blockFailures.put(pos, fails + 1);
+            } else {
+                blockFailures = failureCounts.get(player.getUUID());
+                if (blockFailures != null) {
+                    blockFailures.remove(pos);
+                }
+            }
+
             return InteractionResult.FAIL;
         }
 
         lastUseTimestamps.put(pos, gameTime);
+        if (level.getBlockEntity(pos) instanceof CatalystBlockEntity catalystBE) {
+            catalystBE.resetCooldown();
+        }
 
         Block generator = provider.getGeneratorBlock(serverLevel);
         if (generator == null) {

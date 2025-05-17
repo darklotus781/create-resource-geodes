@@ -25,13 +25,13 @@ public class ModBlocks {
     public static final DeferredBlock<Block> ASURINE_CATALYST = registerBlock("asurine_catalyst",
             () -> new AsurineCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.COLOR_BLUE).noLootTable().randomTicks()));
     public static final DeferredBlock<Block> CRIMSITE_CATALYST = registerBlock("crimsite_catalyst",
-            () -> new CrimsiteCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.COLOR_RED).noLootTable().randomTicks()));
+            () -> new CrimsiteCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.COLOR_RED).noLootTable().randomTicks()));
     public static final DeferredBlock<Block> OCHRUM_CATALYST = registerBlock("ochrum_catalyst",
-            () -> new OchrumCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_YELLOW).noLootTable().randomTicks()));
+            () -> new OchrumCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_YELLOW).noLootTable().randomTicks()));
     public static final DeferredBlock<Block> VERIDIUM_CATALYST = registerBlock("veridium_catalyst",
-            () -> new VeridiumCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.WARPED_NYLIUM).noLootTable().randomTicks()));
+            () -> new VeridiumCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.WARPED_NYLIUM).noLootTable().randomTicks()));
     public static final DeferredBlock<Block> SKY_STONE_CATALYST = registerBlock("sky_stone_catalyst",
-            () -> new SkyStoneCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.DEEPSLATE).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_BLACK).noLootTable().randomTicks()));
+            () -> new SkyStoneCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.AMETHYST).lightLevel(s -> 10).mapColor(MapColor.TERRACOTTA_BLACK).noLootTable().randomTicks()));
 
     // Generic Catalyst Placeholders for Modpack makers:
     public static final DeferredBlock<Block> GENERIC_CATALYST_1 = registerCatalystPlaceholder("generic_catalyst_1");

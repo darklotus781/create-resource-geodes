@@ -1,13 +1,12 @@
 package com.lithiumcraft.createresourcegeodes.block;
 
+import com.lithiumcraft.createresourcegeodes.block.entity.CatalystBlock;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.fml.ModList;
-
-import java.util.Random;
 
 public class SkyStoneCatalystBlock extends CatalystBlock implements CatalystDataProvider {
 

@@ -13,10 +13,14 @@ public class CatalystShapeTasks {
     private static final List<BlockPlacerTask> ACTIVE_TASKS = new ArrayList<>();
 
     public static void queueSphere(Level level, BlockPos center, Block block, int radius, float fill) {
+//        System.out.println("[queueSphere] Skipping Placement");
+
         ACTIVE_TASKS.add(new SpherePlacer(level, center, block, radius, fill));
     }
 
     public static void queueCube(Level level, BlockPos center, Block block, int radius, float fill) {
+//        System.out.println("[queueCube] Skipping Placement");
+
         ACTIVE_TASKS.add(new CubePlacer(level, center, block, radius, fill));
     }
 

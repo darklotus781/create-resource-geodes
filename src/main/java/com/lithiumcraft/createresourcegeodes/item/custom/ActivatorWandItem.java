@@ -3,6 +3,7 @@ package com.lithiumcraft.createresourcegeodes.item.custom;
 import com.lithiumcraft.createresourcegeodes.Config;
 import com.lithiumcraft.createresourcegeodes.block.CatalystBlock;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
+import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -80,7 +81,7 @@ public class ActivatorWandItem extends Item {
         BlockState state = context.getLevel().getBlockState(positionClicked);
 
         // Ensure the block clicked is a CatalystBlock
-        if (clickedBlock instanceof CatalystBlock && !level.isClientSide()) {
+        if (clickedBlock instanceof CatalystDataProvider && !level.isClientSide()) {
             int x = positionClicked.getX();
             int y = positionClicked.getY();
             int z = positionClicked.getZ();
