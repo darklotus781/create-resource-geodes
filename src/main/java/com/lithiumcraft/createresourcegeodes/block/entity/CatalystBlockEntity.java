@@ -41,11 +41,11 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         if (def != null) {
             cachedCooldown = def.cooldownTicks();
             cachedTier = def.minimumTier();
-            System.out.println("[CatalystBE] Loaded from registry: " + id);
+//            System.out.println("[CatalystBE] Loaded from registry: " + id);
         } else {
             cachedCooldown = getDefaultCooldown();
             cachedTier = getDefaultMinimumTier();
-            System.out.println("[CatalystBE] Using fallback for: " + id);
+//            System.out.println("[CatalystBE] Using fallback for: " + id);
         }
 
         setChanged();

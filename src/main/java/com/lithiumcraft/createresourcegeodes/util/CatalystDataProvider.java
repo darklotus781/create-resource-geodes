@@ -29,6 +29,10 @@ public interface CatalystDataProvider {
         return 1;
     }
 
+    default int getDefaultRadius() { return 4; }
+
+    default float getDefaultFillPercentage() { return 0.35f; }
+
     /** Main accessor used by the item or block */
     default Block getGeneratorBlock(ServerLevel level) {
         var registry = level.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
@@ -57,12 +61,12 @@ public interface CatalystDataProvider {
     default int getRadius(ServerLevel level) {
         var registry = level.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
         var def = registry.get(getCatalystId());
-        return def != null ? def.radius() : 3; // fallback
+        return def != null ? def.radius() : getDefaultRadius(); // fallback
     }
 
     default float getFillPercentage(ServerLevel level) {
         var registry = level.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
         var def = registry.get(getCatalystId());
-        return def != null ? def.fillPercentage() : 1.0f;
+        return def != null ? def.fillPercentage() : getDefaultFillPercentage();
     }
 }

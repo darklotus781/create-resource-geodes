@@ -14,13 +14,11 @@ public class CatalystShapeTasks {
 
     public static void queueSphere(Level level, BlockPos center, Block block, int radius, float fill) {
 //        System.out.println("[queueSphere] Skipping Placement");
-
         ACTIVE_TASKS.add(new SpherePlacer(level, center, block, radius, fill));
     }
 
     public static void queueCube(Level level, BlockPos center, Block block, int radius, float fill) {
 //        System.out.println("[queueCube] Skipping Placement");
-
         ACTIVE_TASKS.add(new CubePlacer(level, center, block, radius, fill));
     }
 
@@ -46,22 +44,21 @@ public class CatalystShapeTasks {
             this.level = (ServerLevel) level;
             this.block = block;
 
-            List<BlockPos> tempPositions = new ArrayList<>();
+            List<BlockPos> allPositions = new ArrayList<>();
             BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {
                     for (int z = -radius; z <= radius; z++) {
-                        if (RAND.nextDouble() <= fillPercentage) {
-                            pos.set(center.getX() + x, center.getY() + y, center.getZ() + z);
-                            tempPositions.add(pos.immutable());
-                        }
+                        pos.set(center.getX() + x, center.getY() + y, center.getZ() + z);
+                        allPositions.add(pos.immutable());
                     }
                 }
             }
 
-            Collections.shuffle(tempPositions, RAND);
-            positions.addAll(tempPositions);
+            Collections.shuffle(allPositions, RAND);
+            int count = Math.round(allPositions.size() * fillPercentage);
+            positions.addAll(allPositions.subList(0, count));
         }
 
         public void tick() {
@@ -91,25 +88,23 @@ public class CatalystShapeTasks {
             this.level = (ServerLevel) level;
             this.block = block;
 
-            List<BlockPos> tempPositions = new ArrayList<>();
+            List<BlockPos> allPositions = new ArrayList<>();
             BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {
                     for (int z = -radius; z <= radius; z++) {
                         if (x * x + y * y + z * z <= radius * radius) {
-                            if (RAND.nextDouble() <= fillPercentage) {
-                                pos.set(center.getX() + x, center.getY() + y, center.getZ() + z);
-                                tempPositions.add(pos.immutable());
-                            }
+                            pos.set(center.getX() + x, center.getY() + y, center.getZ() + z);
+                            allPositions.add(pos.immutable());
                         }
                     }
                 }
             }
 
-            // Shuffle for random placement order
-            Collections.shuffle(tempPositions, RAND);
-            positions.addAll(tempPositions);
+            Collections.shuffle(allPositions, RAND);
+            int count = Math.round(allPositions.size() * fillPercentage);
+            positions.addAll(allPositions.subList(0, count));
         }
 
         public void tick() {
