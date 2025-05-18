@@ -14,22 +14,10 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CreateResourceGeodes.MOD_ID);
 
     public static final DeferredItem<Item> ACTIVATOR_WAND = ITEMS.register("catalyst_activator_wand",
-            () -> new ActivatorWandItem(new Item.Properties()) {
-                @Override
-                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_activator_wand.tooltip"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
+            () -> new ActivatorWandItem(new Item.Properties()));
 
     public static final DeferredItem<Item> CATALYST_AGITATOR = ITEMS.register("catalyst_agitator",
-            () -> new CatalystAgitatorTier1Item(new Item.Properties().rarity(Rarity.COMMON)) {
-                @Override
-                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_agitator.tooltip"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
+            () -> new CatalystAgitatorTier1Item(new Item.Properties().rarity(Rarity.COMMON)));
 
     public static final DeferredItem<Item> CATALYST_AGITATOR_TIER_2 = ITEMS.register("catalyst_agitator_tier_2",
             () -> new CatalystAgitatorTier2Item(new Item.Properties().rarity(Rarity.UNCOMMON)));

@@ -68,17 +68,17 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         return Blocks.INFESTED_DEEPSLATE;
     }
 
-    public int getCachedCooldown() {
-        return cachedCooldown;
-    }
-
-    public int getCachedTier() {
-        return cachedTier;
-    }
-
-    public int getCooldownTicksRemaining() {
-        return cooldownTicksRemaining;
-    }
+//    public int getCachedCooldown() {
+//        return cachedCooldown;
+//    }
+//
+//    public int getCachedTier() {
+//        return cachedTier;
+//    }
+//
+//    public int getCooldownTicksRemaining() {
+//        return cooldownTicksRemaining;
+//    }
 
     public void tickServer(ServerLevel level, BlockPos pos, BlockState state) {
         if (catalystId == null) {
@@ -88,6 +88,7 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
 
             if (id != null) {
                 System.out.println("[CatalystBE] Repairing old catalyst at " + worldPosition);
+                ensureCachedTier();
                 setCatalystId(id, level);
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3); // <--- force client refresh
             }
@@ -139,5 +140,31 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         cachedCooldown = tag.getInt("CachedCooldown");
         cachedTier = tag.getInt("CachedTier");
         cooldownTicksRemaining = tag.getInt("RemainingCooldown");
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+            if (getBlockState().getBlock() instanceof CatalystDataProvider provider) {
+                cachedTier = provider.getMinimumTier(serverLevel);
+                cachedCooldown = provider.getCooldown(serverLevel);
+            }
+
+            ModNetwork.sendCatalystSync(
+                    new ClientboundSyncCatalystDataPacket(worldPosition, cooldownTicksRemaining, cachedTier),
+                    serverLevel,
+                    worldPosition
+            );
+        }
+    }
+
+    private void ensureCachedTier() {
+        if (cachedTier < 0 && level instanceof ServerLevel serverLevel) {
+            if (getBlockState().getBlock() instanceof CatalystDataProvider provider) {
+                cachedTier = provider.getMinimumTier(serverLevel);
+            }
+        }
     }
 }

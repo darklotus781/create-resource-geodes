@@ -88,5 +88,29 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(Items.REDSTONE)
                 .unlockedBy("has_wand", has(ModItems.ACTIVATOR_WAND))
                 .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CATALYST_AGITATOR_TIER_2.get(), 8)
+                .requires(ModItems.ACTIVATOR_WAND.get())
+                .requires(Items.GLOWSTONE_DUST)
+                .requires(ModItems.CATALYST_AGITATOR.get())
+                .requires(ModItems.CATALYST_AGITATOR.get())
+                .unlockedBy("has_agitator_tier_1", has(ModItems.CATALYST_AGITATOR))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CATALYST_AGITATOR_TIER_3.get(), 8)
+                .requires(ModItems.ACTIVATOR_WAND.get())
+                .requires(Items.AMETHYST_SHARD)
+                .requires(ModItems.CATALYST_AGITATOR_TIER_2.get())
+                .requires(ModItems.CATALYST_AGITATOR_TIER_2.get())
+                .unlockedBy("has_agitator_tier_2", has(ModItems.CATALYST_AGITATOR_TIER_2))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CATALYST_AGITATOR_TIER_4.get(), 8)
+                .requires(ModItems.ACTIVATOR_WAND.get())
+                .requires(Items.ECHO_SHARD)
+                .requires(ModItems.CATALYST_AGITATOR_TIER_3.get())
+                .requires(ModItems.CATALYST_AGITATOR_TIER_3.get())
+                .unlockedBy("has_agitator_tier_3", has(ModItems.CATALYST_AGITATOR_TIER_3))
+                .save(recipeOutput);
     }
 }

@@ -4,14 +4,13 @@ import com.lithiumcraft.createresourcegeodes.Config;
 import com.lithiumcraft.createresourcegeodes.block.CatalystBlock;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -22,12 +21,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
 import java.util.Random;
 
 public class ActivatorWandItem extends Item {
@@ -39,7 +38,11 @@ public class ActivatorWandItem extends Item {
         super(new Item.Properties().stacksTo(1).durability(65).rarity(Rarity.RARE));
     }
 
-
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_activator_wand.tooltip"));
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    }
 
     @Override
     public boolean isEnchantable(ItemStack stack) {

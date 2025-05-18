@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createresourcegeodes:catalyst_activator_wand"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "createresourcegeodes:catalyst_agitator_tier_3"
+    },
+    {
+      "item": "createresourcegeodes:catalyst_agitator_tier_3"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "createresourcegeodes:catalyst_agitator_tier_4"
+  }
+}

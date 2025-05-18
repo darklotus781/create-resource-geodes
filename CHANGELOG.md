@@ -1,7 +1,15 @@
-# [0.2.2]
+# [0.2.4]
+### Changes
+- Added Create Ponder for Agitator -> Catalyst = Generated Blocks
+- Fixed Jade compat issues where initial Tier wasn't showing on Catalysts.
+- Added default recipes for Tier 1 - 4 of Agitators.
+
+---
+
+# [0.2.3]
 ### Changes
 - Added Jade compat for Catalysts to see Tier Requirement and Cooldown timer
-
+- Added JEI compat for Catalyst + Agitator = Generator Blocks
 
 ---
 

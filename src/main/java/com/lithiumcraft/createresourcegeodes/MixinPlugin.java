@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
+
     private boolean isAE2Loaded = false;
+//    private boolean isPonderLoaded = false;
 
     @Override
     public void onLoad(String mixinPackage) {
-        // Use the loading-time mod list — it's safe at this point
-        isAE2Loaded = LoadingModList.get().getModFileById("ae2") != null;
+        var modList = LoadingModList.get();
+        isAE2Loaded = modList.getModFileById("ae2") != null;
+//        isPonderLoaded = modList.getModFileById("ponder") != null;
     }
 
     @Override
@@ -24,25 +27,27 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return isAE2Loaded;
+        // Match based on simple naming or package conventions
+        if (mixinClassName.contains("AppEngMixin")) {
+            return isAE2Loaded;
+        }
+//        if (mixinClassName.contains("PonderMixin")) {
+//            return isPonderLoaded;
+//        }
+        return true; // fallback: apply other mixins if added later
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-    }
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {}
 
     @Override
     public List<String> getMixins() {
-        return null; // Return null to use mixins.json normally
+        return null; // Use mixins.json as source of mixin list
     }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-
-    }
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-
-    }
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
 }

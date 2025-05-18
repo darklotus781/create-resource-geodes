@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createresourcegeodes:catalyst_activator_wand"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "createresourcegeodes:catalyst_agitator"
+    },
+    {
+      "item": "createresourcegeodes:catalyst_agitator"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "createresourcegeodes:catalyst_agitator_tier_2"
+  }
+}

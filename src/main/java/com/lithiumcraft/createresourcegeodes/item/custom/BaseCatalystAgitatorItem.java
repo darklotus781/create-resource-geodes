@@ -7,11 +7,15 @@ import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import com.lithiumcraft.createresourcegeodes.util.CatalystShapeTasks;
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import org.slf4j.Logger;
 import net.minecraft.core.BlockPos;
@@ -23,6 +27,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,6 +42,18 @@ public abstract class BaseCatalystAgitatorItem extends Item {
     }
 
     public abstract CatalystAgitatorTier getTier();
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        if (Screen.hasShiftDown()) {
+            tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_agitator.tooltip"));
+        } else {
+            CatalystAgitatorTier tier = this.getTier();
+            tooltipComponents.add(Component.literal("Agitator Tier: " + tier.getLevel())
+                    .withStyle(ChatFormatting.DARK_PURPLE));
+        }
+    }
+
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
