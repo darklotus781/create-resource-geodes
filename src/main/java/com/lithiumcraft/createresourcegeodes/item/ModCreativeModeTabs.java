@@ -43,6 +43,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.CATALYST_AGITATOR_TIER_3);
                         output.accept(ModItems.CATALYST_AGITATOR_TIER_4);
                         output.accept(ModItems.CATALYST_CORE);
+                        output.accept(ModItems.CATALYST_ACTIVATOR_WAND_SHAFT);
+                        output.accept(ModItems.CATALYST_ACTIVATOR_WAND_GEM);
                     }).build());
 
 

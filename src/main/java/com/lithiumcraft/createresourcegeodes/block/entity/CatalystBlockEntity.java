@@ -6,6 +6,7 @@ import com.lithiumcraft.createresourcegeodes.network.ModNetwork;
 import com.lithiumcraft.createresourcegeodes.registry.ModRegistries;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.HolderLookup;
@@ -22,9 +23,22 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
     private int cooldownTicksRemaining = 0;
     public int clientSyncedCooldown = 0;
     public int clientSyncedTier = 0;
+    private boolean userPlaced = false;
 
     public CatalystBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.CATALYST.get(), pos, state);
+    }
+
+    public void setUserPlaced(boolean userPlaced) {
+        this.userPlaced = userPlaced;
+        setChanged();
+        if (level != null && !level.isClientSide) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    public boolean isUserPlaced() {
+        return userPlaced;
     }
 
     public void setCatalystId(ResourceLocation id) {
@@ -120,6 +134,21 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         this.setChanged();
     }
 
+    public CompoundTag saveCustomData(HolderLookup.Provider provider) {
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag, provider);
+        if (!tag.contains("id")) {
+            tag.putString("id", BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(this.getType()).toString());
+        }
+
+        return tag;
+    }
+
+    public void loadCustomData(CompoundTag tag, HolderLookup.Provider provider) {
+        this.loadAdditional(tag, provider);
+        this.setChanged();
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         if (catalystId != null) {
@@ -129,6 +158,7 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         tag.putInt("CachedCooldown", cachedCooldown);
         tag.putInt("CachedTier", cachedTier);
         tag.putInt("RemainingCooldown", cooldownTicksRemaining);
+        tag.putBoolean("UserPlaced", userPlaced);
     }
 
     @Override
@@ -140,6 +170,7 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         cachedCooldown = tag.getInt("CachedCooldown");
         cachedTier = tag.getInt("CachedTier");
         cooldownTicksRemaining = tag.getInt("RemainingCooldown");
+        this.userPlaced = tag.getBoolean("UserPlaced");
     }
 
     @Override

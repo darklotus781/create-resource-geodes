@@ -22,9 +22,14 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        this.add("catalyst_activator_wand_from_abandoned_mineshafts",
-                new AddItemModifier(new LootItemCondition[]{
-                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("chests/abandoned_mineshaft")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.35f).build()}, ModItems.ACTIVATOR_WAND.get()));
+//        this.add("catalyst_activator_wand_gem_from_abandoned_mineshafts",
+//                new AddItemModifier(new LootItemCondition[]{
+//                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("chests/abandoned_mineshaft")).build(),
+//                        LootItemRandomChanceCondition.randomChance(0.35f).build()}, ModItems.ACTIVATOR_WAND_GEM.get()));
+//
+//        this.add("catalyst_activator_wand_shaft_from_warden",
+//                new AddItemModifier(new LootItemCondition[]{
+//                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/warden")).build(),
+//                        LootItemRandomChanceCondition.randomChance(0.25f).build()}, ModItems.ACTIVATOR_WAND_SHAFT.get()));
     }
 }

@@ -1,22 +1,16 @@
 package com.lithiumcraft.createresourcegeodes.datagen;
 
-import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
 import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
 import com.lithiumcraft.createresourcegeodes.item.ModItems;
-import com.lithiumcraft.createresourcegeodes.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.level.ItemLike;
-import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
@@ -111,6 +105,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModItems.CATALYST_AGITATOR_TIER_3.get())
                 .requires(ModItems.CATALYST_AGITATOR_TIER_3.get())
                 .unlockedBy("has_agitator_tier_3", has(ModItems.CATALYST_AGITATOR_TIER_3))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ACTIVATOR_WAND.get())
+                .pattern("  G")
+                .pattern(" S ")
+                .pattern("S  ")
+                .define('G', ModItems.CATALYST_ACTIVATOR_WAND_GEM.get())
+                .define('S', ModItems.CATALYST_ACTIVATOR_WAND_SHAFT.get())
+                .unlockedBy("has_shaft", has(ModItems.CATALYST_ACTIVATOR_WAND_SHAFT))
+                .unlockedBy("has_gem", has(ModItems.CATALYST_ACTIVATOR_WAND_GEM))
                 .save(recipeOutput);
     }
 }

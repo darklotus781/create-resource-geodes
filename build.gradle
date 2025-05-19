@@ -119,6 +119,10 @@ dependencies {
     implementation "curse.maven:create-328085:6323264"
     implementation "curse.maven:applied-energistics-2-223794:6488853"
     implementation "curse.maven:guideme-1173950:6488254"
+    implementation "curse.maven:just-enough-resources-jer-240630:6506298"
+    implementation "curse.maven:cucumber-272335:6481512"
+//    implementation "curse.maven:mekanism-268560:6486993"
+//    implementation "curse.maven:just-dire-things-1002348:6369120"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

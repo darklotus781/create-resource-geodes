@@ -2,19 +2,31 @@ package com.lithiumcraft.createresourcegeodes.item.custom;
 
 import com.lithiumcraft.createresourcegeodes.Config;
 import com.lithiumcraft.createresourcegeodes.block.CatalystBlock;
+import com.lithiumcraft.createresourcegeodes.block.entity.CatalystBlockEntity;
+import com.lithiumcraft.createresourcegeodes.block.entity.ModBlockEntities;
+import com.lithiumcraft.createresourcegeodes.config.WandMode;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
+import com.lithiumcraft.createresourcegeodes.util.WandModeUtil;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import net.minecraft.core.BlockPos;
@@ -38,10 +50,15 @@ public class ActivatorWandItem extends Item {
         super(new Item.Properties().stacksTo(1).durability(65).rarity(Rarity.RARE));
     }
 
+//    @Override
+//    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+//        tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_activator_wand.tooltip"));
+//        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+//    }
+
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_activator_wand.tooltip"));
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.literal("Mode: " + WandModeUtil.getMode(stack)).withStyle(ChatFormatting.DARK_PURPLE));
     }
 
     @Override
@@ -79,66 +96,123 @@ public class ActivatorWandItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        Block clickedBlock = level.getBlockState(context.getClickedPos()).getBlock();
-        BlockPos positionClicked = context.getClickedPos();
-        BlockState state = context.getLevel().getBlockState(positionClicked);
+        BlockPos pos = context.getClickedPos();
+        BlockState state = level.getBlockState(pos);
+        Block block = state.getBlock();
 
-        // Ensure the block clicked is a CatalystBlock
-        if (clickedBlock instanceof CatalystDataProvider && !level.isClientSide()) {
-            int x = positionClicked.getX();
-            int y = positionClicked.getY();
-            int z = positionClicked.getZ();
-            int iVal = Config.moveCatalystDistance;
+        if (!(block instanceof CatalystDataProvider)) return InteractionResult.PASS;
 
-            // Adjust position based on the clicked face
-            switch (context.getClickedFace().getOpposite().getName()) {
-                case "up":
-                    y = y + iVal;
-                    break;
-                case "down":
-                    y = y - iVal;
-                    break;
-                case "east":
-                    x = x + iVal;
-                    break;
-                case "west":
-                    x = x - iVal;
-                    break;
-                case "north":
-                    z = z - iVal;
-                    break;
-                case "south":
-                    z = z + iVal;
-                    break;
-            }
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
-            BlockPos newPos = new BlockPos(x, y, z);
+        WandMode mode = WandModeUtil.getMode(context.getItemInHand());
 
-            // Check if we can move the block to the new position (water or air)
-            if (((Config.catalystMoveIgnoreWater && level.getBlockState(newPos).is(Blocks.WATER)) || level.getBlockState(newPos).isAir())
-                    && y <= level.getMaxBuildHeight() - 10 && y >= level.getMinBuildHeight() + 10) {
-                // Remove the block at the clicked position and place it at the new position
-                level.setBlockAndUpdate(positionClicked, Blocks.AIR.defaultBlockState());
-                level.setBlockAndUpdate(newPos, state.getBlock().defaultBlockState());
-
-                // Play the sound and particles at the original block position
-                level.playSound(null, positionClicked, ModSounds.CATALYST_BLOCK_TELEPORT.get(), SoundSource.BLOCKS, 1f, 1f);
-                for (int i = 0; i < 2; ++i) {
-                    level.addParticle(ParticleTypes.PORTAL, positionClicked.getX(), positionClicked.getY(), positionClicked.getZ(),
-                            (RAND.nextDouble() - 0.5D) * 2.0D, -RAND.nextDouble(), (RAND.nextDouble() - 0.5D) * 2.0D);
-                }
-
-
-                if (Config.catalystWandDurability) {
-
-                    // This will apply durability damage AND respect Unbreaking enchantments
-                    context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
-                }
-
-                context.getPlayer().getCooldowns().addCooldown(this, 20);
-            }
+        if (mode == WandMode.MOVE) {
+            return tryMoveCatalyst(context, level, pos, state);
+        } else if (mode == WandMode.BREAK) {
+            return tryBreakCatalyst(context, level, pos, state);
         }
 
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+
+        if (player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
+                WandMode currentMode = WandModeUtil.getMode(stack);
+                WandMode nextMode = currentMode.next();
+                WandModeUtil.setMode(stack, nextMode);
+                player.displayClientMessage(Component.literal("Switched to " + nextMode.name() + " Mode"), true);
+            }
+            return InteractionResultHolder.success(stack);
+        }
+
+        return InteractionResultHolder.pass(stack);
+    }
+
+    private InteractionResult tryMoveCatalyst(UseOnContext context, Level level, BlockPos oldPos, BlockState oldState) {
+        int x = oldPos.getX();
+        int y = oldPos.getY();
+        int z = oldPos.getZ();
+        int offset = Config.moveCatalystDistance;
+
+        switch (context.getClickedFace().getOpposite()) {
+            case UP -> y += offset;
+            case DOWN -> y -= offset;
+            case EAST -> x += offset;
+            case WEST -> x -= offset;
+            case NORTH -> z -= offset;
+            case SOUTH -> z += offset;
+        }
+
+        BlockPos newPos = new BlockPos(x, y, z);
+
+        boolean validTarget = (
+                (Config.catalystMoveIgnoreWater && level.getBlockState(newPos).is(Blocks.WATER)) ||
+                        level.getBlockState(newPos).isAir()
+        );
+
+        if (!validTarget) return InteractionResult.FAIL;
+
+        if (y < level.getMinBuildHeight() + 10 || y > level.getMaxBuildHeight() - 10) return InteractionResult.FAIL;
+
+        // Get old BE and its NBT
+        BlockEntity oldBE = level.getBlockEntity(oldPos);
+        CompoundTag preservedTag = null;
+        if (oldBE instanceof CatalystBlockEntity oldCatalyst) {
+            preservedTag = oldCatalyst.saveCustomData(level.registryAccess());
+        }
+
+        level.setBlockAndUpdate(oldPos, Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(newPos, oldState.getBlock().defaultBlockState());
+
+        BlockEntity newBE = level.getBlockEntity(newPos);
+        if (newBE instanceof CatalystBlockEntity newCatalyst && preservedTag != null) {
+            newCatalyst.loadCustomData(preservedTag, level.registryAccess());
+        }
+
+        // Optional: sound/particles
+        level.playSound(null, oldPos, ModSounds.CATALYST_BLOCK_TELEPORT.get(), SoundSource.BLOCKS, 1f, 1f);
+        for (int i = 0; i < 2; ++i) {
+            level.addParticle(ParticleTypes.PORTAL, oldPos.getX(), oldPos.getY(), oldPos.getZ(),
+                    (RAND.nextDouble() - 0.5D) * 2.0D, -RAND.nextDouble(), (RAND.nextDouble() - 0.5D) * 2.0D);
+        }
+
+        if (Config.catalystWandDurability) {
+            context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
+        }
+
+        context.getPlayer().getCooldowns().addCooldown(this, 20);
         return InteractionResult.SUCCESS;
     }
+
+
+    private InteractionResult tryBreakCatalyst(UseOnContext context, Level level, BlockPos pos, BlockState state) {
+        BlockEntity be = level.getBlockEntity(pos);
+
+        if (be instanceof CatalystBlockEntity catalyst && catalyst.isUserPlaced()) {
+            CompoundTag tag = catalyst.saveCustomData(level.registryAccess());
+            ItemStack dropped = new ItemStack(state.getBlock().asItem());
+
+            dropped.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), dropped);
+            level.removeBlock(pos, false);
+
+            level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1f, 1f);
+
+            if (Config.catalystWandDurability) {
+                context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
+            }
+
+            context.getPlayer().getCooldowns().addCooldown(this, 10);
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.FAIL;
+    }
+
+
 }

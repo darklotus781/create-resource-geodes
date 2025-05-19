@@ -2,6 +2,7 @@ package com.lithiumcraft.createresourcegeodes;
 
 import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
 import com.lithiumcraft.createresourcegeodes.block.entity.ModBlockEntities;
+import com.lithiumcraft.createresourcegeodes.component.ModDataComponents;
 import com.lithiumcraft.createresourcegeodes.item.ModCreativeModeTabs;
 import com.lithiumcraft.createresourcegeodes.item.ModItems;
 import com.lithiumcraft.createresourcegeodes.loot.ModLootModifiers;
@@ -43,6 +44,8 @@ public class CreateResourceGeodes {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModDataComponents.register(modEventBus);
 
         ModBlockEntities.register(modEventBus);
 

@@ -28,6 +28,8 @@
     "item.createresourcegeodes.catalyst_agitator_tier_3": "Catalyst Agitator Tier 3",
     "item.createresourcegeodes.catalyst_agitator_tier_4": "Catalyst Agitator Tier 4",
     "item.createresourcegeodes.catalyst_core": "Catalyst Core",
+    "item.createresourcegeodes.catalyst_activator_wand_gem": "Catalyst Activator Wand Gem",
+    "item.createresourcegeodes.catalyst_activator_wand_shaft": "Catalyst Activator Wand Shaft",
     "sounds.createresourcegeodes.catalyst_block_teleport": "Catalyst Teleports",
     "sounds.createresourcegeodes.agitator_invalid_tier": "Catalyst not agitated",
     "sounds.createresourcegeodes.tube_is_a_bot": "Tube's a Bot!",

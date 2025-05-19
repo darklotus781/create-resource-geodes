@@ -41,8 +41,12 @@ public class ModEvents {
         List<VillagerTrades.ItemListing> rareTrades = event.getRareTrades();
 
         rareTrades.add((pTrader, pRandom) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 12),
-                new ItemStack(ModItems.ACTIVATOR_WAND.get(), 1), 2, 2, 0.2f));
+                new ItemCost(Items.EMERALD, 16),
+                new ItemStack(ModItems.CATALYST_ACTIVATOR_WAND_GEM.get(), 1), 1, 10, 0.2f));
+
+        rareTrades.add((pTrader, pRandom) -> new MerchantOffer(
+                new ItemCost(Items.EMERALD, 16),
+                new ItemStack(ModItems.CATALYST_ACTIVATOR_WAND_SHAFT.get(), 1), 1, 10, 0.2f));
     }
 
     @SubscribeEvent

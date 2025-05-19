@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gem": {
+      "conditions": {
+        "items": [
+          {
+            "items": "createresourcegeodes:catalyst_activator_wand_gem"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_shaft": {
+      "conditions": {
+        "items": [
+          {
+            "items": "createresourcegeodes:catalyst_activator_wand_shaft"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "createresourcegeodes:catalyst_activator_wand"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_shaft",
+      "has_gem"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "createresourcegeodes:catalyst_activator_wand"
+    ]
+  }
+}

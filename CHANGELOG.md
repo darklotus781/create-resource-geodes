@@ -1,3 +1,16 @@
+# [0.2.5]
+### Changes
+- Added Tag to Catalyst Blocks "c:relocation_not_supported"
+- Added Wand Shaft drop from Warden with a 25% Chance
+- Added Wand Gem loot to Abandoned Mineshaft Chests
+- Added Wand Shaft Item
+- Added Wand Gem Item
+- Added new Recipe for the Wand to be craftable using items found from exploration.
+- There's a rare chance of finding a wand in End City treasure loot.
+- Added Wand Mode - Break / Move so you can either move a catalyst or break one you've crafted and placed in the world.  All data is preserved, so there's no way to bypass the cooldown.
+
+---
+
 # [0.2.4]
 ### Changes
 - Fixed Jade compat issues where initial Tier wasn't showing on Catalysts.
@@ -9,7 +22,10 @@
 ### Changes
 - Added Jade compat for Catalysts to see Tier Requirement and Cooldown timer
 - Added JEI compat for Catalyst + Agitator = Generator Blocks
-
+- Added Wand Gem and Wand Shaft items + Recipe
+- Changed Loot Tables for finding shaft and gem parts as well as Wand item.
+- Added a Wand Mode, Shift + Click in the air to switch from Move to Break.
+  -  This allows moving any Catalyst, and breaking player crafted and placed catalysts.
 ---
 
 # [0.2.2]

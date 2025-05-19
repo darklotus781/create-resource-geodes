@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "createresourcegeodes:catalyst_activator_wand_gem"
+    },
+    "S": {
+      "item": "createresourcegeodes:catalyst_activator_wand_shaft"
+    }
+  },
+  "pattern": [
+    "  G",
+    " S ",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createresourcegeodes:catalyst_activator_wand"
+  }
+}

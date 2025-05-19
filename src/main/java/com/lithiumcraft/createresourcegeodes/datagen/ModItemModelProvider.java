@@ -19,6 +19,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
 //        handheldItem(ModItems.ACTIVATOR_WAND);
         simpleItem(ModItems.CATALYST_AGITATOR);
+        simpleItem(ModItems.CATALYST_ACTIVATOR_WAND_GEM);
+        simpleItem(ModItems.CATALYST_ACTIVATOR_WAND_SHAFT);
         simpleItem(ModItems.CATALYST_CORE);
     }
 

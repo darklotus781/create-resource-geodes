@@ -37,6 +37,12 @@ public class ModItems {
                 }
             });
 
+    public static final DeferredItem<Item> CATALYST_ACTIVATOR_WAND_SHAFT = ITEMS.register("catalyst_activator_wand_shaft",
+            () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<Item> CATALYST_ACTIVATOR_WAND_GEM = ITEMS.register("catalyst_activator_wand_gem",
+            () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
