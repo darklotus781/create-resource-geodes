@@ -1,6 +1,6 @@
 # [0.2.8]
 ### Changes
-
+- Fixed custom agitator not being consumed on use.
 
 # [0.2.7]
 ### Changes

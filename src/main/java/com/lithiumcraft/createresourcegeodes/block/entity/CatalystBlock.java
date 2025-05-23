@@ -102,7 +102,11 @@ public abstract class CatalystBlock extends Block implements EntityBlock, Cataly
             return ItemInteractionResult.SUCCESS;
         }
 
-        // Activate catalyst
+        // ✅ Shrink custom agitator item if not in creative
+        if (player != null && !player.isCreative()) {
+            stack.shrink(1);
+        }
+
         boolean success = catalyst.tryActivate(level, stack, player);
         return success ? ItemInteractionResult.SUCCESS : ItemInteractionResult.FAIL;
     }
