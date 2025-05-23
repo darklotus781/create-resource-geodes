@@ -1,27 +1,29 @@
 {
-    "structures": [
-      {
-        "structure": "createresourcegeodes:veridium_geode",
-        "weight": 30
-      },
-      {
-        "structure": "createresourcegeodes:asurine_geode",
-        "weight": 30
-      },
-      {
-        "structure": "createresourcegeodes:ochrum_geode",
-        "weight": 30
-      },
-      {
-        "structure": "createresourcegeodes:crimsite_geode",
-        "weight": 30
-      }
-    ],
-    "placement": {
-      "type": "minecraft:random_spread",
-      "spacing": 12,
-      "separation": 6,
-      "salt": 5829348834
+  "structures": [
+    {
+      "structure": "createresourcegeodes:veridium_geode",
+      "weight": 30
+    },
+    {
+      "structure": "createresourcegeodes:asurine_geode",
+      "weight": 30
+    },
+    {
+      "structure": "createresourcegeodes:ochrum_geode",
+      "weight": 30
+    },
+    {
+      "structure": "createresourcegeodes:crimsite_geode",
+      "weight": 30
     }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 5,
+    "salt": 5829348834,
+    "frequency_reduction_method": "default",
+    "frequency": 0.25
   }
+}
   

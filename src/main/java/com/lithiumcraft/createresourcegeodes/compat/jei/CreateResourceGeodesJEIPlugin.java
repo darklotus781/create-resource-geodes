@@ -14,9 +14,9 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -82,9 +82,9 @@ public class CreateResourceGeodesJEIPlugin implements IModPlugin {
                                 provider.getDefaultShape(),
                                 provider.getDefaultRadius(),
                                 provider.getDefaultFillPercentage(),
-                                provider.getDefaultMinimumTier()
+                                provider.getDefaultMinimumTier(),
+                                null // ← no custom agitator
                         );
-//                        System.out.println("[JEI] Using fallback definition for: " + id);
                     }
 
                     Item blockItem = block.asItem();
@@ -117,36 +117,37 @@ public class CreateResourceGeodesJEIPlugin implements IModPlugin {
             for (CatalystRecipe recipe : recipes) {
                 ItemStack stack = recipe.getCatalystItem();
 
-                String shapeName = recipe.getShape().name().toLowerCase();
+                String shapeName = recipe.getDefinition().shape().name().toLowerCase();
                 shapeName = shapeName.substring(0, 1).toUpperCase() + shapeName.substring(1);
-                String generatorName = BuiltInRegistries.BLOCK.getKey(recipe.getGeneratorBlock()).getPath().replace("_", " ");
+                String generatorName = BuiltInRegistries.BLOCK.getKey(recipe.getDefinition().generatorBlock()).getPath();
                 generatorName = generatorName.substring(0, 1).toUpperCase() + generatorName.substring(1);
 
-                Component info = Component.literal("")
-                        .append(Component.literal("Generates: ")
-                                .withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(generatorName)
-                                .withStyle(ChatFormatting.DARK_PURPLE))
-                        .append(Component.literal("\nTier Required: ")
-                                .withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal("Tier " + recipe.getTier())
-                                .withStyle(ChatFormatting.DARK_PURPLE))
-                        .append(Component.literal("\nCooldown: ")
-                                .withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal((recipe.getCooldownTicks() / 20) + " seconds")
-                                .withStyle(ChatFormatting.DARK_PURPLE))
-                        .append(Component.literal("\nRadius: ")
-                                .withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(recipe.getRadius() + "")
-                                .withStyle(ChatFormatting.DARK_PURPLE))
-                        .append(Component.literal("\nFill: ")
-                                .withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(Math.round(recipe.getFillPercentage() * 100f) + "%")
-                                .withStyle(ChatFormatting.DARK_PURPLE))
-                        .append(Component.literal("\nShape: ")
-                                .withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(shapeName)
-                                .withStyle(ChatFormatting.DARK_PURPLE));
+                MutableComponent info = Component.literal("")
+                        .append(Component.literal("Generates: ").withStyle(ChatFormatting.DARK_GRAY))
+                        .append(Component.literal(generatorName).withStyle(ChatFormatting.DARK_PURPLE));
+
+// ➜ Insert tier OR custom agitator info
+                if (recipe.getDefinition().isCustomAgitatorBased()) {
+                    ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(recipe.getDefinition().customAgitatorItem());
+                    String itemName = itemId.getPath().replace("_", " ");
+                    itemName = itemName.substring(0, 1).toUpperCase() + itemName.substring(1);
+
+                    info = info.append(Component.literal("\nAgitator Required: ").withStyle(ChatFormatting.DARK_GRAY))
+                            .append(Component.literal(itemName).withStyle(ChatFormatting.DARK_PURPLE));
+                } else {
+                    info = info.append(Component.literal("\nTier Required: ").withStyle(ChatFormatting.DARK_GRAY))
+                            .append(Component.literal("Tier " + recipe.getDefinition().minimumTier()).withStyle(ChatFormatting.DARK_PURPLE));
+                }
+
+                info = info
+                        .append(Component.literal("\nCooldown: ").withStyle(ChatFormatting.DARK_GRAY))
+                        .append(Component.literal((recipe.getCooldownTicks() / 20) + " seconds").withStyle(ChatFormatting.DARK_PURPLE))
+                        .append(Component.literal("\nRadius: ").withStyle(ChatFormatting.DARK_GRAY))
+                        .append(Component.literal(recipe.getRadius() + "").withStyle(ChatFormatting.DARK_PURPLE))
+                        .append(Component.literal("\nFill: ").withStyle(ChatFormatting.DARK_GRAY))
+                        .append(Component.literal(Math.round(recipe.getFillPercentage() * 100f) + "%").withStyle(ChatFormatting.DARK_PURPLE))
+                        .append(Component.literal("\nShape: ").withStyle(ChatFormatting.DARK_GRAY))
+                        .append(Component.literal(shapeName).withStyle(ChatFormatting.DARK_PURPLE));
 
                 registration.addIngredientInfo(List.of(stack), VanillaTypes.ITEM_STACK, info);
             }

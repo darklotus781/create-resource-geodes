@@ -50,12 +50,6 @@ public class ActivatorWandItem extends Item {
         super(new Item.Properties().stacksTo(1).durability(65).rarity(Rarity.RARE));
     }
 
-//    @Override
-//    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-//        tooltipComponents.add(Component.translatable("tooltip.createresourcegeodes.catalyst_activator_wand.tooltip"));
-//        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-//    }
-
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.literal("Mode: " + WandModeUtil.getMode(stack)).withStyle(ChatFormatting.DARK_PURPLE));
@@ -213,6 +207,4 @@ public class ActivatorWandItem extends Item {
 
         return InteractionResult.FAIL;
     }
-
-
 }

@@ -83,10 +83,10 @@ public class CreateResourceGeodes {
             var level = event.getServer().overworld();
             var registry = level.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
 
-            System.out.println("[CatalystDebug] Registry size: " + registry.size());
+//            System.out.println("[CatalystDebug] Registry size: " + registry.size());
 
-            System.out.println("[CatalystDebug] === Catalyst Datapack Entries ===");
-            registry.keySet().forEach(key -> System.out.println(" - " + key));
+//            System.out.println("[CatalystDebug] === Catalyst Datapack Entries ===");
+//            registry.keySet().forEach(key -> System.out.println(" - " + key));
         }
     }
 }

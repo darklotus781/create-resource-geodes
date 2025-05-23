@@ -1,3 +1,21 @@
+# [0.2.8]
+### Changes
+
+
+# [0.2.7]
+### Changes
+- Moved Agitator definitions to JSON as well.
+  - This means you can define an Explosive Catalyst that is agitated by gunpowder to generate TNT blocks.
+  - Tiers are still supported, so you can use Tier 1-4 or Custom agitators, not both.
+
+---
+
+# [0.2.6]
+### Changes
+- Updated textures for Catalyst Agitator Tiers
+
+---
+
 # [0.2.5]
 ### Changes
 - Added Tag to Catalyst Blocks "c:relocation_not_supported"

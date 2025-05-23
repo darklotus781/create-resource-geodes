@@ -3,13 +3,16 @@ package com.lithiumcraft.createresourcegeodes.item.custom;
 import com.lithiumcraft.createresourcegeodes.block.entity.CatalystBlockEntity;
 import com.lithiumcraft.createresourcegeodes.config.CatalystAgitatorTier;
 import com.lithiumcraft.createresourcegeodes.config.CatalystShape;
+import com.lithiumcraft.createresourcegeodes.data.CatalystGeneratorDefinition;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import com.lithiumcraft.createresourcegeodes.util.CatalystShapeTasks;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -17,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.slf4j.Logger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,6 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,65 +66,59 @@ public abstract class BaseCatalystAgitatorItem extends Item {
         Level level = context.getLevel();
         Player player = context.getPlayer();
         BlockPos pos = context.getClickedPos();
-        Block clickedBlock = level.getBlockState(pos).getBlock();
 
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!(clickedBlock instanceof CatalystDataProvider provider)) return InteractionResult.SUCCESS;
+
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof CatalystBlockEntity catalystBE)) return InteractionResult.SUCCESS;
 
         ServerLevel serverLevel = (ServerLevel) level;
-        CatalystAgitatorTier agitatorTier = getTier();
-        int requiredTier = provider.getMinimumTier(serverLevel);
+        CatalystGeneratorDefinition def = catalystBE.getGeneratorDefinition();
+        if (def == null) return InteractionResult.FAIL;
 
+        // Custom agitator check
+        Item customAgitator = def.customAgitatorItem();
+        ResourceLocation heldItemId = BuiltInRegistries.ITEM.getKey(item.getItem());
+        ResourceLocation customItemId = (customAgitator != null) ? BuiltInRegistries.ITEM.getKey(customAgitator) : null;
+        boolean isMatchingCustom = customItemId != null && heldItemId.equals(customItemId);
+
+        // Cooldown check
         long gameTime = serverLevel.getGameTime();
         long lastUsed = lastUseTimestamps.getOrDefault(pos, -1L);
-        int cooldown = provider.getCooldown(serverLevel);
-
+        int cooldown = def.cooldownTicks();
         if (gameTime - lastUsed < cooldown) {
-            serverLevel.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.NOTE_BLOCK_BASS, SoundSource.BLOCKS, 1.0f, 1.0f);
-            serverLevel.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.01);
+            serverLevel.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
+                    SoundEvents.NOTE_BLOCK_BASS, SoundSource.BLOCKS, 1.0f, 1.0f);
+            serverLevel.sendParticles(ParticleTypes.SMOKE,
+                    pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
+                    8, 0.2, 0.2, 0.2, 0.01);
             return InteractionResult.FAIL;
         }
 
-        if (agitatorTier.getLevel() < requiredTier) {
-            UUID playerId = player.getUUID();
-            Map<BlockPos, Integer> blockFailures = failureCounts.computeIfAbsent(playerId, k -> new HashMap<>());
-            int fails = blockFailures.getOrDefault(pos, 0);
-
-            if (fails < 10) {
-                // Play sound for attempts < 10
-                SoundEvent sound = (fails == 9)
-                        ? ModSounds.DONT_BE_A_BOT.get() // 10th failed attempt
-                        : ModSounds.AGITATOR_INVALID_TIER.get();
-
-                serverLevel.playSound(null, pos, sound, SoundSource.BLOCKS, 1f, 1f);
-                serverLevel.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.01);
-
-                // Increment and store failure count
-                blockFailures.put(pos, fails + 1);
-            } else {
-                blockFailures = failureCounts.get(player.getUUID());
-                if (blockFailures != null) {
-                    blockFailures.remove(pos);
-                }
+        // Validation: tier OR item
+        if (customItemId != null) {
+            // Custom item required
+            if (!isMatchingCustom) {
+                return handleFailureFeedback(serverLevel, pos, player) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
+        } else {
+            // Tier-based check
+            CatalystAgitatorTier agitatorTier = getTier();
+            int requiredTier = def.minimumTier();
 
-            return InteractionResult.FAIL;
+            if (agitatorTier.getLevel() < requiredTier) {
+                return handleFailureFeedback(serverLevel, pos, player) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+            }
         }
 
+        // ✅ Passed all checks — activate
         lastUseTimestamps.put(pos, gameTime);
-        if (level.getBlockEntity(pos) instanceof CatalystBlockEntity catalystBE) {
-            catalystBE.resetCooldown();
-        }
+        catalystBE.resetCooldown();
 
-        Block generator = provider.getGeneratorBlock(serverLevel);
-        if (generator == null) {
-            LOGGER.warn("No generator block found for catalyst {} at {}", provider.getCatalystId(), pos);
-            return InteractionResult.FAIL;
-        }
-
-        CatalystShape shape = provider.getShape(serverLevel);
-        int radius = provider.getRadius(serverLevel);
-        float fill = provider.getFillPercentage(serverLevel);
+        Block generator = def.generatorBlock();
+        CatalystShape shape = def.shape();
+        int radius = def.radius();
+        float fill = def.fillPercentage();
 
         if (!player.getAbilities().instabuild) {
             item.shrink(1);
@@ -132,4 +131,33 @@ public abstract class BaseCatalystAgitatorItem extends Item {
 
         return InteractionResult.SUCCESS;
     }
+
+
+
+    private boolean handleFailureFeedback(ServerLevel level, BlockPos pos, @Nullable Player player) {
+        UUID playerId = player != null ? player.getUUID() : UUID.randomUUID();
+        Map<BlockPos, Integer> blockFailures = failureCounts.computeIfAbsent(playerId, k -> new HashMap<>());
+        int fails = blockFailures.getOrDefault(pos, 0);
+
+        if (fails < 10) {
+            SoundEvent sound = (fails == 9)
+                    ? ModSounds.DONT_BE_A_BOT.get()
+                    : ModSounds.AGITATOR_INVALID_TIER.get();
+
+            level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), sound, SoundSource.BLOCKS, 1f, 1f);
+            level.sendParticles(ParticleTypes.SMOKE,
+                    pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
+                    8, 0.2, 0.2, 0.2, 0.01);
+
+            blockFailures.put(pos, fails + 1);
+        } else {
+            Map<BlockPos, Integer> existing = failureCounts.get(playerId);
+            if (existing != null) {
+                existing.remove(pos);
+            }
+        }
+
+        return false;
+    }
+
 }

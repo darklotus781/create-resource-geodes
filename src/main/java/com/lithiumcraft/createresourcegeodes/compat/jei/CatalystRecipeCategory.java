@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
@@ -77,7 +78,7 @@ public class CatalystRecipeCategory implements IRecipeCategory<CatalystRecipe> {
                 .addItemStack(recipe.getCatalystItem());
 
         // Output: Generated block (as item or fallback)
-        Block generatorBlock = recipe.getGeneratorBlock();
+        Block generatorBlock = recipe.getDefinition().generatorBlock();
         Item blockItem = generatorBlock.asItem();
 
         if (blockItem == Items.AIR || blockItem == null) {
@@ -95,11 +96,20 @@ public class CatalystRecipeCategory implements IRecipeCategory<CatalystRecipe> {
         Minecraft mc = Minecraft.getInstance();
         Font font = mc.font;
 
-        String text = "Tier " + recipe.getTier() + " Agitator Required";
+        String text;
+        if (recipe.getDefinition().isCustomAgitatorBased()) {
+            ResourceLocation id = BuiltInRegistries.ITEM.getKey(recipe.getDefinition().customAgitatorItem());
+            String itemName = id.getPath().replace("_", " ");
+            itemName = itemName.substring(0, 1).toUpperCase() + itemName.substring(1);
+
+            text = "Requires: " + itemName;
+        } else {
+            text = "Tier " + recipe.getDefinition().minimumTier() + " Agitator Required";
+        }
+
         int x = 11;
         int y = 57;
-
-        guiGraphics.drawString(font, text, x, y, 0x80FF20, false); // goldish green
+        guiGraphics.drawString(font, text, x, y, 0x80FF20, false);
     }
 
 //    @Override

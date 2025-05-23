@@ -1,0 +1,8 @@
+{
+  "generator": "create:ochrum",
+  "cooldown": 200,
+  "shape": "SPHERE",
+  "radius": 4,
+  "fill_percentage": 0.35,
+  "minimum_tier": 1
+}

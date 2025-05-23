@@ -30,10 +30,12 @@ public class ModNetwork {
                         if (level != null && level.getBlockEntity(payload.pos()) instanceof CatalystBlockEntity catalyst) {
                             catalyst.clientSyncedCooldown = payload.cooldownRemaining();
                             catalyst.clientSyncedTier = payload.requiredTier();
+                            catalyst.clientSyncedAgitatorItem = payload.requiredAgitatorItem();
                         }
                     });
                 }
         );
+
 
         // ✅ 2. JEI catalyst registry sync
         registrar.playToClient(
@@ -42,7 +44,7 @@ public class ModNetwork {
                 (payload, context) -> {
                     Minecraft.getInstance().execute(() -> {
                         CatalystRegistryCache.updateFromClient(payload.definitions());
-                        System.out.println("[ModNetwork] ✅ Synced " + payload.definitions().size() + " catalyst definitions to client");
+//                        System.out.println("[ModNetwork] ✅ Synced " + payload.definitions().size() + " catalyst definitions to client");
                     });
                 }
         );
