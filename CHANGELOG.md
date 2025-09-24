@@ -1,3 +1,7 @@
+# [0.2.9]
+### Changes
+- Removed static definition of catalysts via json.
+
 # [0.2.8]
 ### Changes
 - Fixed custom agitator not being consumed on use.
