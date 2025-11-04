@@ -1,0 +1,32 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:diamond_geode",
+        "processors": "createresourcegeodes:diamond_processor"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:frozen_geode",
+        "processors": "createresourcegeodes:packed_ice_processor"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:radioactive_geode",
+        "processors": "createresourcegeodes:uranium_processor"
+      }
+    }
+  ]
+}

@@ -1,21 +1,5 @@
 {
   "values": [
-    "createresourcegeodes:asurine_catalyst",
-    "createresourcegeodes:crimsite_catalyst",
-    "createresourcegeodes:ochrum_catalyst",
-    "createresourcegeodes:veridium_catalyst",
-    "createresourcegeodes:sky_stone_catalyst",
-    "createresourcegeodes:generic_catalyst_1",
-    "createresourcegeodes:generic_catalyst_2",
-    "createresourcegeodes:generic_catalyst_3",
-    "createresourcegeodes:generic_catalyst_4",
-    "createresourcegeodes:generic_catalyst_5",
-    "createresourcegeodes:generic_catalyst_6",
-    "createresourcegeodes:generic_catalyst_7",
-    "createresourcegeodes:generic_catalyst_8",
-    "createresourcegeodes:generic_catalyst_9",
-    "createresourcegeodes:generic_catalyst_10",
-    "createresourcegeodes:generic_catalyst_11",
-    "createresourcegeodes:generic_catalyst_12"
+    "#createresourcegeodes:catalysts"
   ]
 }

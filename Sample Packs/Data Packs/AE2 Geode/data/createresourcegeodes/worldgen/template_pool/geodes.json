@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:skystone_geode",
+        "processors": "createresourcegeodes:skystone_processor"
+      }
+    }
+  ]
+}

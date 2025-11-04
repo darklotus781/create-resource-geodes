@@ -1,0 +1,9 @@
+{
+  "generator": "minecraft:deepslate_diamond_ore",
+  "cooldown": 6000,
+  "shape": "SPHERE",
+  "radius": 3,
+  "fill_percentage": 0.15,
+  "minimum_tier": 4,
+  "custom_agitator_item": "mekanism:enriched_diamond"
+}

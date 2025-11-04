@@ -20,6 +20,7 @@ package com.lithiumcraft.createresourcegeodes.datagen;
 
 import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
 import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
+import com.lithiumcraft.createresourcegeodes.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -38,100 +39,38 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(ModTags.Blocks.CATALYSTS)
+                .addOptional(CreateResourceGeodes.rl("asurine_catalyst"))
+                .addOptional(CreateResourceGeodes.rl("crimsite_catalyst"))
+                .addOptional(CreateResourceGeodes.rl("ochrum_catalyst"))
+                .addOptional(CreateResourceGeodes.rl("veridium_catalyst"))
+                .addOptional(CreateResourceGeodes.rl("sky_stone_catalyst"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_1"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_2"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_3"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_4"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_5"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_6"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_7"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_8"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_9"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_10"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_11"))
+                .addOptional(CreateResourceGeodes.rl("generic_catalyst_12"));
+
         tag(BlockTags.FEATURES_CANNOT_REPLACE)
-                .add(ModBlocks.ASURINE_CATALYST.get())
-                .add(ModBlocks.CRIMSITE_CATALYST.get())
-                .add(ModBlocks.OCHRUM_CATALYST.get())
-                .add(ModBlocks.VERIDIUM_CATALYST.get())
-                .add(ModBlocks.SKY_STONE_CATALYST.get())
-                .add(ModBlocks.GENERIC_CATALYST_1.get())
-                .add(ModBlocks.GENERIC_CATALYST_2.get())
-                .add(ModBlocks.GENERIC_CATALYST_3.get())
-                .add(ModBlocks.GENERIC_CATALYST_4.get())
-                .add(ModBlocks.GENERIC_CATALYST_5.get())
-                .add(ModBlocks.GENERIC_CATALYST_6.get())
-                .add(ModBlocks.GENERIC_CATALYST_7.get())
-                .add(ModBlocks.GENERIC_CATALYST_8.get())
-                .add(ModBlocks.GENERIC_CATALYST_9.get())
-                .add(ModBlocks.GENERIC_CATALYST_10.get())
-                .add(ModBlocks.GENERIC_CATALYST_11.get())
-                .add(ModBlocks.GENERIC_CATALYST_12.get());
+                .addTag(ModTags.Blocks.CATALYSTS);
 
         tag(RELOCATION_NOT_SUPPORTED)
-                .add(ModBlocks.ASURINE_CATALYST.get())
-                .add(ModBlocks.CRIMSITE_CATALYST.get())
-                .add(ModBlocks.OCHRUM_CATALYST.get())
-                .add(ModBlocks.VERIDIUM_CATALYST.get())
-                .add(ModBlocks.SKY_STONE_CATALYST.get())
-                .add(ModBlocks.GENERIC_CATALYST_1.get())
-                .add(ModBlocks.GENERIC_CATALYST_2.get())
-                .add(ModBlocks.GENERIC_CATALYST_3.get())
-                .add(ModBlocks.GENERIC_CATALYST_4.get())
-                .add(ModBlocks.GENERIC_CATALYST_5.get())
-                .add(ModBlocks.GENERIC_CATALYST_6.get())
-                .add(ModBlocks.GENERIC_CATALYST_7.get())
-                .add(ModBlocks.GENERIC_CATALYST_8.get())
-                .add(ModBlocks.GENERIC_CATALYST_9.get())
-                .add(ModBlocks.GENERIC_CATALYST_10.get())
-                .add(ModBlocks.GENERIC_CATALYST_11.get())
-                .add(ModBlocks.GENERIC_CATALYST_12.get());
+                .addTag(ModTags.Blocks.CATALYSTS);
 
         tag(WITHER_IMMUNE)
-                .add(ModBlocks.ASURINE_CATALYST.get())
-                .add(ModBlocks.CRIMSITE_CATALYST.get())
-                .add(ModBlocks.OCHRUM_CATALYST.get())
-                .add(ModBlocks.VERIDIUM_CATALYST.get())
-                .add(ModBlocks.SKY_STONE_CATALYST.get())
-                .add(ModBlocks.GENERIC_CATALYST_1.get())
-                .add(ModBlocks.GENERIC_CATALYST_2.get())
-                .add(ModBlocks.GENERIC_CATALYST_3.get())
-                .add(ModBlocks.GENERIC_CATALYST_4.get())
-                .add(ModBlocks.GENERIC_CATALYST_5.get())
-                .add(ModBlocks.GENERIC_CATALYST_6.get())
-                .add(ModBlocks.GENERIC_CATALYST_7.get())
-                .add(ModBlocks.GENERIC_CATALYST_8.get())
-                .add(ModBlocks.GENERIC_CATALYST_9.get())
-                .add(ModBlocks.GENERIC_CATALYST_10.get())
-                .add(ModBlocks.GENERIC_CATALYST_11.get())
-                .add(ModBlocks.GENERIC_CATALYST_12.get());
+                .addTag(ModTags.Blocks.CATALYSTS);
 
         tag(DRAGON_IMMUNE)
-                .add(ModBlocks.ASURINE_CATALYST.get())
-                .add(ModBlocks.CRIMSITE_CATALYST.get())
-                .add(ModBlocks.OCHRUM_CATALYST.get())
-                .add(ModBlocks.VERIDIUM_CATALYST.get())
-                .add(ModBlocks.SKY_STONE_CATALYST.get())
-                .add(ModBlocks.GENERIC_CATALYST_1.get())
-                .add(ModBlocks.GENERIC_CATALYST_2.get())
-                .add(ModBlocks.GENERIC_CATALYST_3.get())
-                .add(ModBlocks.GENERIC_CATALYST_4.get())
-                .add(ModBlocks.GENERIC_CATALYST_5.get())
-                .add(ModBlocks.GENERIC_CATALYST_6.get())
-                .add(ModBlocks.GENERIC_CATALYST_7.get())
-                .add(ModBlocks.GENERIC_CATALYST_8.get())
-                .add(ModBlocks.GENERIC_CATALYST_9.get())
-                .add(ModBlocks.GENERIC_CATALYST_10.get())
-                .add(ModBlocks.GENERIC_CATALYST_11.get())
-                .add(ModBlocks.GENERIC_CATALYST_12.get());
+                .addTag(ModTags.Blocks.CATALYSTS);
 
         tag(BLACKLISTED_SPATIAL)
-                .add(ModBlocks.ASURINE_CATALYST.get())
-                .add(ModBlocks.CRIMSITE_CATALYST.get())
-                .add(ModBlocks.OCHRUM_CATALYST.get())
-                .add(ModBlocks.VERIDIUM_CATALYST.get())
-                .add(ModBlocks.SKY_STONE_CATALYST.get())
-                .add(ModBlocks.GENERIC_CATALYST_1.get())
-                .add(ModBlocks.GENERIC_CATALYST_2.get())
-                .add(ModBlocks.GENERIC_CATALYST_3.get())
-                .add(ModBlocks.GENERIC_CATALYST_4.get())
-                .add(ModBlocks.GENERIC_CATALYST_5.get())
-                .add(ModBlocks.GENERIC_CATALYST_6.get())
-                .add(ModBlocks.GENERIC_CATALYST_7.get())
-                .add(ModBlocks.GENERIC_CATALYST_8.get())
-                .add(ModBlocks.GENERIC_CATALYST_9.get())
-                .add(ModBlocks.GENERIC_CATALYST_10.get())
-                .add(ModBlocks.GENERIC_CATALYST_11.get())
-                .add(ModBlocks.GENERIC_CATALYST_12.get());
+                .addTag(ModTags.Blocks.CATALYSTS);
     }
-
 }

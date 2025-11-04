@@ -1,0 +1,72 @@
+{
+  "values": [
+    {
+      "id": "createresourcegeodes:asurine_catalyst",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:crimsite_catalyst",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:ochrum_catalyst",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:veridium_catalyst",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:sky_stone_catalyst",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_1",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_2",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_3",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_4",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_5",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_6",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_7",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_8",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_9",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_10",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_11",
+      "required": false
+    },
+    {
+      "id": "createresourcegeodes:generic_catalyst_12",
+      "required": false
+    }
+  ]
+}

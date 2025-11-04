@@ -1,0 +1,41 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:asurine_geode",
+        "processors": "createresourcegeodes:asurine_processor"
+      }
+    },
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:crimsite_geode",
+        "processors": "createresourcegeodes:crimsite_processor"
+      }
+    },
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:ochrum_geode",
+        "processors": "createresourcegeodes:ochrum_processor"
+      }
+    },
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "createresourcegeodes:veridium_geode",
+        "processors": "createresourcegeodes:veridium_processor"
+      }
+    }
+  ]
+}

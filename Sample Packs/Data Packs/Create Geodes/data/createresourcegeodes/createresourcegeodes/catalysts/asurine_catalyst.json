@@ -1,0 +1,9 @@
+{
+  "generator": "create:asurine",
+  "cooldown": 240,
+  "shape": "SPHERE",
+  "radius": 7,
+  "fill_percentage": 0.45,
+  "minimum_tier": 1,
+  "custom_agitator_item": "createresourcegeodes:catalyst_agitator"
+}

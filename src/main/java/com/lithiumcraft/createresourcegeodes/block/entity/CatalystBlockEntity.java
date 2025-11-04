@@ -91,7 +91,7 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
 
         setChanged();
 
-        // ✅ Convert custom agitator item → ResourceLocation, if defined
+        // Convert custom agitator item → ResourceLocation, if defined
         Optional<ResourceLocation> agitatorItem = Optional.empty();
         if (def != null && def.customAgitatorItem() != null) {
             agitatorItem = Optional.of(BuiltInRegistries.ITEM.getKey(def.customAgitatorItem()));
@@ -322,7 +322,7 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
                     .get(catalystId);
         }
 
-        // ✅ Fallback to hardcoded defaults
+        // Fallback to hardcoded defaults
         if (def == null && getBlockState().getBlock() instanceof CatalystDataProvider provider) {
             return new CatalystGeneratorDefinition(
                     provider.getDefaultGeneratorBlock(),

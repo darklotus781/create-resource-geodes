@@ -1,0 +1,9 @@
+{
+  "generator": "mekanism:deepslate_uranium_ore",
+  "cooldown": 3600,
+  "shape": "SPHERE",
+  "radius": 5,
+  "fill_percentage": 0.35,
+  "minimum_tier": 3,
+  "custom_agitator_item": "mekanism:enriched_tin"
+}

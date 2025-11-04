@@ -38,50 +38,50 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ASURINE_CATALYST.get())
-                .pattern("BBB")
-                .pattern("BWB")
-                .pattern("BBB")
-                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "asurine")))
-                .define('W', ModItems.CATALYST_CORE.get())
-                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CRIMSITE_CATALYST.get())
-                .pattern("BBB")
-                .pattern("BWB")
-                .pattern("BBB")
-                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "crimsite")))
-                .define('W', ModItems.CATALYST_CORE.get())
-                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.OCHRUM_CATALYST.get())
-                .pattern("BBB")
-                .pattern("BWB")
-                .pattern("BBB")
-                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "ochrum")))
-                .define('W', ModItems.CATALYST_CORE.get())
-                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.VERIDIUM_CATALYST.get())
-                .pattern("BBB")
-                .pattern("BWB")
-                .pattern("BBB")
-                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "veridium")))
-                .define('W', ModItems.CATALYST_CORE.get())
-                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SKY_STONE_CATALYST.get())
-                .pattern("BBB")
-                .pattern("BWB")
-                .pattern("BBB")
-                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("ae2", "sky_stone_block")))
-                .define('W', ModItems.CATALYST_CORE.get())
-                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
-                .save(recipeOutput.withConditions(new ModLoadedCondition("ae2")));
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ASURINE_CATALYST.get())
+//                .pattern("BBB")
+//                .pattern("BWB")
+//                .pattern("BBB")
+//                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "asurine")))
+//                .define('W', ModItems.CATALYST_CORE.get())
+//                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
+//                .save(recipeOutput.withConditions(new ModLoadedCondition("create")));
+//
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CRIMSITE_CATALYST.get())
+//                .pattern("BBB")
+//                .pattern("BWB")
+//                .pattern("BBB")
+//                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "crimsite")))
+//                .define('W', ModItems.CATALYST_CORE.get())
+//                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
+//                .save(recipeOutput.withConditions(new ModLoadedCondition("create")));
+//
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.OCHRUM_CATALYST.get())
+//                .pattern("BBB")
+//                .pattern("BWB")
+//                .pattern("BBB")
+//                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "ochrum")))
+//                .define('W', ModItems.CATALYST_CORE.get())
+//                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
+//                .save(recipeOutput.withConditions(new ModLoadedCondition("create")));
+//
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.VERIDIUM_CATALYST.get())
+//                .pattern("BBB")
+//                .pattern("BWB")
+//                .pattern("BBB")
+//                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "veridium")))
+//                .define('W', ModItems.CATALYST_CORE.get())
+//                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
+//                .save(recipeOutput.withConditions(new ModLoadedCondition("create")));
+//
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SKY_STONE_CATALYST.get())
+//                .pattern("BBB")
+//                .pattern("BWB")
+//                .pattern("BBB")
+//                .define('B', BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("ae2", "sky_stone_block")))
+//                .define('W', ModItems.CATALYST_CORE.get())
+//                .unlockedBy("has_core", has(ModItems.CATALYST_CORE))
+//                .save(recipeOutput.withConditions(new ModLoadedCondition("ae2")));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CATALYST_CORE.get())
                 .pattern("SDS")

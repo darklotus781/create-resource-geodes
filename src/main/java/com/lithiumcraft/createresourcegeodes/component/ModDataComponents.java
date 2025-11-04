@@ -22,14 +22,16 @@ import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.nbt.StringTag;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.UnaryOperator;
 
+
 public class ModDataComponents {
+
+    @SuppressWarnings("deprecated")
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
             DeferredRegister.createDataComponents(CreateResourceGeodes.MOD_ID);
 

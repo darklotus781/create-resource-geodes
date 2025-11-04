@@ -74,7 +74,7 @@ side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "create"
-type = "required"
+type = "optional"
 versionRange = "[6.0.4,)"
 ordering = "AFTER"
 side = "BOTH"

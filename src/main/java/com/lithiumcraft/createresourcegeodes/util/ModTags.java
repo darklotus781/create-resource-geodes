@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.Block;
 
 public class ModTags {
     public static class Blocks {
-//        public static final TagKey<Block> SKY_STONE_BLOCK = createTag("sky_stone_block");
+        public static final TagKey<Block> CATALYSTS = createTag("catalysts");
 
         private static TagKey<Block> createTag(String name) {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(CreateResourceGeodes.MOD_ID, name));

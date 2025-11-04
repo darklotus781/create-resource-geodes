@@ -24,9 +24,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 
@@ -38,23 +40,9 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.ACTIVATOR_WAND.get()))
                     .title(Component.translatable("creativetab.createresourcegeodes_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModBlocks.ASURINE_CATALYST);
-                        output.accept(ModBlocks.CRIMSITE_CATALYST);
-                        output.accept(ModBlocks.OCHRUM_CATALYST);
-                        output.accept(ModBlocks.VERIDIUM_CATALYST);
-                        output.accept(ModBlocks.SKY_STONE_CATALYST);
-                        output.accept(ModBlocks.GENERIC_CATALYST_1);
-                        output.accept(ModBlocks.GENERIC_CATALYST_2);
-                        output.accept(ModBlocks.GENERIC_CATALYST_3);
-                        output.accept(ModBlocks.GENERIC_CATALYST_4);
-                        output.accept(ModBlocks.GENERIC_CATALYST_5);
-                        output.accept(ModBlocks.GENERIC_CATALYST_6);
-                        output.accept(ModBlocks.GENERIC_CATALYST_7);
-                        output.accept(ModBlocks.GENERIC_CATALYST_8);
-                        output.accept(ModBlocks.GENERIC_CATALYST_9);
-                        output.accept(ModBlocks.GENERIC_CATALYST_10);
-                        output.accept(ModBlocks.GENERIC_CATALYST_11);
-                        output.accept(ModBlocks.GENERIC_CATALYST_12);
+                        ModBlocks.DYNAMIC_CATALYSTS.entrySet().stream()
+                                .sorted(Map.Entry.comparingByKey())
+                                .forEach(entry -> output.accept(entry.getValue().get().asItem()));
                         output.accept(ModItems.ACTIVATOR_WAND);
                         output.accept(ModItems.CATALYST_AGITATOR);
                         output.accept(ModItems.CATALYST_AGITATOR_TIER_2);

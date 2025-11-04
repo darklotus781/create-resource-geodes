@@ -88,7 +88,7 @@ public abstract class CatalystBlock extends Block implements EntityBlock, Cataly
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // ✅ Allow the activator wand to continue its own logic
+        // Allow the activator wand to continue its own logic
         if (stack.getItem() instanceof ActivatorWandItem) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -97,7 +97,7 @@ public abstract class CatalystBlock extends Block implements EntityBlock, Cataly
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // 🔜 Custom agitator logic (redstone, blaze powder, etc.)
+        // Custom agitator logic (redstone, blaze powder, etc.)
         CatalystGeneratorDefinition def = catalyst.getGeneratorDefinition();
         if (def == null || def.customAgitatorItem() == null) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
@@ -120,7 +120,7 @@ public abstract class CatalystBlock extends Block implements EntityBlock, Cataly
             return ItemInteractionResult.SUCCESS;
         }
 
-        // ✅ Shrink custom agitator item if not in creative
+        // Shrink custom agitator item if not in creative
         if (player != null && !player.isCreative()) {
             stack.shrink(1);
         }

@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@EventBusSubscriber(modid = CreateResourceGeodes.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = CreateResourceGeodes.MOD_ID)
 public class ModEvents {
 
     @SubscribeEvent

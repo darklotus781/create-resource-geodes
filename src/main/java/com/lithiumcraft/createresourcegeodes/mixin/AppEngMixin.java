@@ -23,14 +23,20 @@ import appeng.core.definitions.AEBlocks;
 import appeng.worldgen.meteorite.MeteoriteBlockPutter;
 import appeng.worldgen.meteorite.MeteoritePlacer;
 import com.lithiumcraft.createresourcegeodes.Config;
-import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
+import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
 
+@Pseudo
 @Mixin(value = MeteoritePlacer.class, remap = false)
 public abstract class AppEngMixin {
     @Shadow
@@ -46,15 +52,30 @@ public abstract class AppEngMixin {
 
     /**
      * @author DarkLotus
-     * @reason If enabled, we'll replace the Meteorite Chest with a Catalyst
+     * @reason If enabled, replace the Meteorite Chest with a Catalyst if available.
      */
     @Overwrite
     private void placeChest() {
-        BlockState meteorBlock = Config.replaceAe2Meteor ?
-                ModBlocks.SKY_STONE_CATALYST.get().defaultBlockState() :
-                AEBlocks.MYSTERIOUS_CUBE.block().defaultBlockState();
+        BlockState meteorBlock;
+
+        if (Config.replaceAe2Meteor) {
+            // Safe lookup for sky_stone_catalyst block
+            ResourceLocation id = CreateResourceGeodes.rl("sky_stone_catalyst");
+            Block maybeCatalyst = BuiltInRegistries.BLOCK.getOptional(id).orElse(null);
+
+            if (maybeCatalyst != null && maybeCatalyst != Blocks.AIR) {
+                meteorBlock = maybeCatalyst.defaultBlockState();
+            } else {
+                // Fallback to AE2 block if catalyst missing
+                meteorBlock = AEBlocks.MYSTERIOUS_CUBE.block().defaultBlockState();
+            }
+        } else {
+            meteorBlock = AEBlocks.MYSTERIOUS_CUBE.block().defaultBlockState();
+        }
+
         if (AEConfig.instance().isSpawnPressesInMeteoritesEnabled()) {
             this.putter.put(this.level, this.pos, meteorBlock);
         }
     }
 }
+

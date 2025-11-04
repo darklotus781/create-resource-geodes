@@ -1,0 +1,9 @@
+{
+  "generator": "minecraft:packed_ice",
+  "cooldown": 1200,
+  "shape": "SPHERE",
+  "radius": 7,
+  "fill_percentage": 0.45,
+  "minimum_tier": 2,
+  "custom_agitator_item": "minecraft:snowball"
+}

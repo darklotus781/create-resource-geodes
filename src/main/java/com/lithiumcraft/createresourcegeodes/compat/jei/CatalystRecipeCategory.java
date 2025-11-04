@@ -49,12 +49,11 @@ public class CatalystRecipeCategory implements IRecipeCategory<CatalystRecipe> {
     private final IDrawable background;
 
     public CatalystRecipeCategory(IGuiHelper guiHelper) {
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.SKY_STONE_CATALYST.asItem()));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.DUMMY_CATALYST.asItem()));
         this.background = guiHelper.createDrawable(TEXTURE,14 ,38, 140, 36);
-
-//        System.out.println("[JEI] CatalystRecipeCategory constructed");
     }
 
+    @SuppressWarnings("deprecated")
     @Override
     public IDrawable getBackground() {
         return background;
@@ -129,26 +128,4 @@ public class CatalystRecipeCategory implements IRecipeCategory<CatalystRecipe> {
         int y = 57;
         guiGraphics.drawString(font, text, x, y, 0x80FF20, false);
     }
-
-//    @Override
-//    public void draw(CatalystRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-//        Font font = Minecraft.getInstance().font;
-//
-//        // Draw a clean arrow between slots, vertically centered to match item slot
-//        guiGraphics.drawString(font, "→", 44, 14, 0xFFFFFF, true);
-//    }
-
-//    @Override
-//    public void draw(CatalystRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-//        Minecraft mc = Minecraft.getInstance();
-//        Font font = mc.font;
-//
-//        String line1 = String.format(
-//                "%s → %s",
-//                recipe.getCatalystItem().getHoverName().getString(),
-//                BuiltInRegistries.BLOCK.getKey(recipe.getGeneratorBlock()).getPath().replace("_", " ")
-//        );
-//
-//        guiGraphics.drawString(font, line1, 0, 28, 0x555555, false);
-//    }
 }
