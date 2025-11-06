@@ -19,8 +19,7 @@
 package com.lithiumcraft.createresourcegeodes.datagen;
 
 import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
-import com.lithiumcraft.createresourcegeodes.block.ModBlocks;
-import com.lithiumcraft.createresourcegeodes.util.ModTags;
+import com.lithiumcraft.createresourcegeodes.registry.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -29,8 +28,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
-
-import static com.lithiumcraft.createresourcegeodes.registry.CommonBlockTags.*;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
     public ModBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -61,16 +58,16 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.FEATURES_CANNOT_REPLACE)
                 .addTag(ModTags.Blocks.CATALYSTS);
 
-        tag(RELOCATION_NOT_SUPPORTED)
+        tag(ModTags.Blocks.RELOCATION_NOT_SUPPORTED)
                 .addTag(ModTags.Blocks.CATALYSTS);
 
-        tag(WITHER_IMMUNE)
+        tag(BlockTags.WITHER_IMMUNE)
                 .addTag(ModTags.Blocks.CATALYSTS);
 
-        tag(DRAGON_IMMUNE)
+        tag(BlockTags.DRAGON_IMMUNE)
                 .addTag(ModTags.Blocks.CATALYSTS);
 
-        tag(BLACKLISTED_SPATIAL)
+        tag(ModTags.Blocks.BLACKLISTED_SPATIAL)
                 .addTag(ModTags.Blocks.CATALYSTS);
     }
 }
