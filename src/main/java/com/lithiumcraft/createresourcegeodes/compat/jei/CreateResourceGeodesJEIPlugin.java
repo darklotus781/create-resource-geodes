@@ -76,7 +76,7 @@ public class CreateResourceGeodesJEIPlugin implements IModPlugin {
 
 //                    System.out.println("[JEI] Rebuilt CatalystRegistryCache from client registry: " + CatalystRegistryCache.BY_ID.size() + " entries");
                 } catch (Exception e) {
-//                    System.err.println("[JEI] ❌ Failed to rebuild CatalystRegistryCache: " + e.getMessage());
+//                    System.err.println("[JEI] Failed to rebuild CatalystRegistryCache: " + e.getMessage());
                     e.printStackTrace();
                 }
             } else {
@@ -107,17 +107,17 @@ public class CreateResourceGeodesJEIPlugin implements IModPlugin {
 
                     Item blockItem = block.asItem();
                     if (blockItem == Items.AIR || blockItem == null) {
-//                        System.out.println("[JEI] ❌ Skipping: Catalyst block has no item: " + BuiltInRegistries.BLOCK.getKey(block));
+//                        System.out.println("[JEI] Skipping: Catalyst block has no item: " + BuiltInRegistries.BLOCK.getKey(block));
                         return null;
                     }
 
                     Item genItem = def.generatorBlock().asItem();
                     if (genItem == Items.AIR || genItem == null) {
-//                        System.out.println("[JEI] ❌ Skipping: Generator block has no item: " + BuiltInRegistries.BLOCK.getKey(def.generatorBlock()));
+//                        System.out.println("[JEI] Skipping: Generator block has no item: " + BuiltInRegistries.BLOCK.getKey(def.generatorBlock()));
                         return null;
                     }
 
-//                    System.out.println("[JEI] ✅ Valid recipe: " + id + " → " + BuiltInRegistries.ITEM.getKey(genItem));
+//                    System.out.println("[JEI] Valid recipe: " + id + " → " + BuiltInRegistries.ITEM.getKey(genItem));
                     return new CatalystRecipe(new ItemStack(blockItem), def);
                 })
                 .filter(Objects::nonNull)
