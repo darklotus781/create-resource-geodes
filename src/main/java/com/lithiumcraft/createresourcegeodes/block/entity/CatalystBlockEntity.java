@@ -116,18 +116,6 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         return Blocks.INFESTED_DEEPSLATE;
     }
 
-//    public int getCachedCooldown() {
-//        return cachedCooldown;
-//    }
-//
-//    public int getCachedTier() {
-//        return cachedTier;
-//    }
-//
-//    public int getCooldownTicksRemaining() {
-//        return cooldownTicksRemaining;
-//    }
-
     public void tickServer(ServerLevel level, BlockPos pos, BlockState state) {
         if (catalystId == null) {
             ResourceLocation id = level.getBlockState(worldPosition).getBlock() instanceof CatalystDataProvider provider
@@ -201,11 +189,15 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
 
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-//        System.out.println("[Client] loadAdditional() called with tag = " + tag);
-
         if (tag.contains("CatalystId")) {
-            catalystId = ResourceLocation.parse(tag.getString("CatalystId"));
-//            System.out.println("[Client] Parsed CatalystId = " + catalystId);
+            String idStr = tag.getString("CatalystId");
+            try {
+                catalystId = ResourceLocation.parse(idStr);
+            } catch (IllegalArgumentException ex) {
+                catalystId = null; // malformed legacy value, migration will repair onLoad
+            }
+        } else {
+            catalystId = null;
         }
 
         currentCooldown = tag.getInt("CachedCooldown");
@@ -215,12 +207,20 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
     }
 
 
-
     @Override
     public void onLoad() {
         super.onLoad();
 
         if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+
+            // --- MIGRATION / RESET FOR WORLDGEN / LEGACY CATALYSTS ---
+            if (shouldResetLegacy(serverLevel) && getBlockState().getBlock() instanceof CatalystDataProvider provider) {
+                // Get the correct ID for this catalyst from the block
+                ResourceLocation id = provider.getCatalystId();
+                // This will set cooldown/tier from the registry, sync to client, etc.
+                setCatalystId(id, serverLevel);
+            }
+
             if (getBlockState().getBlock() instanceof CatalystDataProvider provider) {
                 cachedTier = provider.getMinimumTier(serverLevel);
                 currentCooldown = provider.getCooldown(serverLevel);
@@ -242,6 +242,7 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         }
     }
+
 
 
     private void ensureCachedTier() {
@@ -294,22 +295,6 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         return cooldownTicksRemaining > 0;
     }
 
-//    public CompoundTag getUpdateTag() {
-//        CompoundTag tag = new CompoundTag();
-//        if (catalystId != null) {
-//            tag.putString("CatalystId", catalystId.toString());
-//        }
-//        return tag;
-//    }
-//
-//    public void handleUpdateTag(CompoundTag tag) {
-//        System.out.println("[Jade Sync] handleUpdateTag called with tag: " + tag);
-//
-//        if (tag.contains("CatalystId")) {
-//            catalystId = ResourceLocation.parse(tag.getString("CatalystId"));
-//        }
-//    }
-
     public CatalystGeneratorDefinition getGeneratorDefinition() {
         if (catalystId == null) return null;
 
@@ -338,21 +323,27 @@ public class CatalystBlockEntity extends BlockEntity implements CatalystDataProv
         return def;
     }
 
+    private boolean shouldResetLegacy(ServerLevel serverLevel) {
+        // Never touch player-placed catalysts
+        if (this.userPlaced) {
+            return false;
+        }
 
-//    @Override
-//    public Packet<ClientGamePacketListener> getUpdatePacket() {
-//        System.out.println("[Server] getUpdatePacket() called for " + worldPosition);
-//        return ClientboundBlockEntityDataPacket.create(this, (be, provider) -> {
-//            CompoundTag tag = new CompoundTag();
-//            this.saveAdditional(tag, provider);
-//            System.out.println("[Server] Sending CatalystId = " + tag.getString("CatalystId"));
-//            return tag;
-//        });
-//    }
+        // If there is no ID at all, we clearly need to repair
+        if (this.catalystId == null) {
+            return true;
+        }
 
-//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-//        CompoundTag tag = pkt.getTag();
-//        System.out.println("[Client] onDataPacket received tag: " + tag);
-//        this.loadAdditional(tag, level.registryAccess());
-//    }
+        // If the current ID is one of the old "generic_catalyst_*" entries, treat it as legacy
+        if ("createresourcegeodes".equals(this.catalystId.getNamespace())
+                && this.catalystId.getPath().startsWith("generic_catalyst_")) {
+            return true;
+        }
+
+        // If the ID no longer exists in the current registry, also reset
+        var registry = serverLevel.registryAccess().registryOrThrow(ModRegistries.CATALYST_DEFINITION_KEY);
+        CatalystGeneratorDefinition def = registry.get(this.catalystId);
+        return def == null;
+    }
+
 }

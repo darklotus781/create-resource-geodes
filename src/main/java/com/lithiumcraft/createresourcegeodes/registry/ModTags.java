@@ -43,7 +43,6 @@ public class ModTags {
     }
 
     public static class Items {
-//        public static final TagKey<Item> SKY_STONE_BLOCK = createTag("sky_stone_block");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(CreateResourceGeodes.MOD_ID, name));

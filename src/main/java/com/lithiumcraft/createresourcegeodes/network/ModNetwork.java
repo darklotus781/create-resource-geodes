@@ -38,7 +38,7 @@ public class ModNetwork {
     public static void registerPackets(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar(CreateResourceGeodes.MOD_ID);
 
-        // ✅ 1. Jade tooltip sync (per block)
+        // 1. Jade tooltip sync (per block)
         registrar.playToClient(
                 ClientboundSyncCatalystDataPacket.TYPE,
                 ClientboundSyncCatalystDataPacket.STREAM_CODEC,
@@ -55,26 +55,26 @@ public class ModNetwork {
         );
 
 
-        // ✅ 2. JEI catalyst registry sync
+        // 2. JEI catalyst registry sync
         registrar.playToClient(
                 ClientboundCatalystRegistryPacket.TYPE,
                 ClientboundCatalystRegistryPacket.STREAM_CODEC,
                 (payload, context) -> {
                     Minecraft.getInstance().execute(() -> {
                         CatalystRegistryCache.updateFromClient(payload.definitions());
-//                        System.out.println("[ModNetwork] ✅ Synced " + payload.definitions().size() + " catalyst definitions to client");
+//                        System.out.println("[ModNetwork] Synced " + payload.definitions().size() + " catalyst definitions to client");
                     });
                 }
         );
     }
 
-    // ✅ Send block-specific tooltip sync to clients tracking the chunk
+    // Send block-specific tooltip sync to clients tracking the chunk
     public static void sendCatalystSync(ClientboundSyncCatalystDataPacket packet, ServerLevel level, BlockPos pos) {
         ChunkPos chunkPos = new ChunkPos(pos);
         PacketDistributor.sendToPlayersTrackingChunk(level, chunkPos, packet);
     }
 
-    // ✅ Send full catalyst registry to one player (e.g. during login or server start)
+    // Send full catalyst registry to one player (e.g. during login or server start)
     public static void sendCatalystRegistrySync(ServerPlayer player, Map<ResourceLocation, CatalystGeneratorDefinition> defs) {
         player.connection.send(new ClientboundCatalystRegistryPacket(defs));
     }

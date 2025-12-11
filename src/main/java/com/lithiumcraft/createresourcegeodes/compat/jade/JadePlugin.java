@@ -67,7 +67,7 @@ class CatalystTooltipProvider implements IBlockComponentProvider {
         boolean showRequirement = true;
 
         if (customItemOpt != null && customItemOpt.isPresent()) {
-            // 🔴 Custom agitator item
+            // Custom agitator item
             ResourceLocation customItem = customItemOpt.get();
 
             if (player != null) {
@@ -86,7 +86,7 @@ class CatalystTooltipProvider implements IBlockComponentProvider {
             }
 
         } else {
-            // 🟡 Tier fallback
+            // Tier fallback
             int tier = catalystBE.clientSyncedTier;
             if (tier <= 0 && accessor.getBlockState().getBlock() instanceof CatalystDataProvider provider) {
                 if (accessor.getLevel().isClientSide()) {
