@@ -1,21 +1,3 @@
-/*
- * create-resource-geodes
- * Copyright (c) 2025 DarkLotus (DarkLotus781) / LithiumCraft
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.lithiumcraft.createresourcegeodes.loot;
 
 import com.lithiumcraft.createresourcegeodes.CreateResourceGeodes;
@@ -27,14 +9,16 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.function.Supplier;
 
-public class ModLootModifiers {
-    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIER_SERIALIZERS =
-            DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, CreateResourceGeodes.MOD_ID);
+public final class ModLootModifiers {
+    private ModLootModifiers() {}
 
-    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_ITEM =
-            LOOT_MODIFIER_SERIALIZERS.register("add_item", () -> AddItemModifier.CODEC);
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
+            DeferredRegister.create(NeoForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, CreateResourceGeodes.MOD_ID);
 
-    public static void register(IEventBus eventBus) {
-        LOOT_MODIFIER_SERIALIZERS.register(eventBus);
+    public static final Supplier<MapCodec<InjectLootModifier>> INJECT_LOOT =
+            LOOT_MODIFIERS.register("inject_loot", () -> InjectLootModifier.CODEC);
+
+    public static void register(IEventBus modEventBus) {
+        LOOT_MODIFIERS.register(modEventBus);
     }
 }

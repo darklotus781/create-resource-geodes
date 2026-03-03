@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.Block;
 public class ModTags {
     public static class Blocks {
         public static final TagKey<Block> CATALYSTS = createTag("catalysts");
+        public static final TagKey<Block> WAND_CAN_BREAK = createTag("wand_can_break");
 
         public static final TagKey<Block> RELOCATION_NOT_SUPPORTED =
                 BlockTags.create(ResourceLocation.parse("c:relocation_not_supported"));

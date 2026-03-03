@@ -55,6 +55,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .addOptional(CreateResourceGeodes.rl("generic_catalyst_11"))
                 .addOptional(CreateResourceGeodes.rl("generic_catalyst_12"));
 
+        tag(ModTags.Blocks.WAND_CAN_BREAK).addTag(ModTags.Blocks.CATALYSTS);
+
         tag(BlockTags.FEATURES_CANNOT_REPLACE)
                 .addTag(ModTags.Blocks.CATALYSTS);
 

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 39,
+                "min": 20
+              },
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "createresourcegeodes:catalyst_activator_wand",
+          "weight": 5
+        }
+      ],
+      "name": "main",
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "createresourcegeodes:inject/chests/end_city_treasure"
+}

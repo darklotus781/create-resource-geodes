@@ -1,0 +1,8 @@
+{
+  "entries": [
+    "createresourcegeodes:entities/warden",
+    "createresourcegeodes:chests/abandoned_mineshaft",
+    "createresourcegeodes:chests/end_city_treasure"
+  ],
+  "replace": false
+}

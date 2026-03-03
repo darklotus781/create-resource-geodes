@@ -43,7 +43,7 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(CreateResourceGeodes.MOD_ID);
 
-        public static final DeferredBlock<Block> DUMMY_CATALYST = registerBlock("dummy_catalyst",
+        public static final DeferredBlock<Block> DUMMY_CATALYST = registerCatalystBlock("dummy_catalyst",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
 
     /** Dynamically-registered catalyst blocks. */
@@ -65,10 +65,20 @@ public class ModBlocks {
         }
     }
 
+    private static <T extends Block> DeferredBlock<T> registerCatalystBlock(String name, Supplier<T> block) {
+        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
+        registerCatalystBlockItem(name, toReturn);
+        return toReturn;
+    }
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
+    }
+
+    private static <T extends Block> void registerCatalystBlockItem(String name, DeferredBlock<T> block) {
+        ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(1).fireResistant()));
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
@@ -76,7 +86,7 @@ public class ModBlocks {
     }
 
     private static DeferredBlock<Block> registerCatalystPlaceholder(String name) {
-        return registerBlock(name, () ->
+        return registerCatalystBlock(name, () ->
                 new GenericCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
                         .sound(SoundType.AMETHYST)
                         .lightLevel(s -> 10)

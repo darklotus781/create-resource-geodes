@@ -23,6 +23,7 @@ import com.lithiumcraft.createresourcegeodes.block.CatalystBlock;
 import com.lithiumcraft.createresourcegeodes.block.entity.CatalystBlockEntity;
 import com.lithiumcraft.createresourcegeodes.block.entity.ModBlockEntities;
 import com.lithiumcraft.createresourcegeodes.config.WandMode;
+import com.lithiumcraft.createresourcegeodes.registry.ModTags;
 import com.lithiumcraft.createresourcegeodes.sound.ModSounds;
 import com.lithiumcraft.createresourcegeodes.util.CatalystDataProvider;
 import com.lithiumcraft.createresourcegeodes.util.WandModeUtil;
@@ -112,20 +113,40 @@ public class ActivatorWandItem extends Item {
         BlockState state = level.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (!(block instanceof CatalystDataProvider)) return InteractionResult.PASS;
-
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-
         WandMode mode = WandModeUtil.getMode(context.getItemInHand());
 
+        // Client-side: return SUCCESS if this click would do something on server,
+        // so the hand anim feels correct.
+        if (level.isClientSide()) {
+            if (mode == WandMode.MOVE) {
+                return (block instanceof CatalystDataProvider) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+            }
+            if (mode == WandMode.BREAK) {
+                return (block instanceof CatalystDataProvider || state.is(ModTags.Blocks.WAND_CAN_BREAK))
+                        ? InteractionResult.SUCCESS
+                        : InteractionResult.PASS;
+            }
+            return InteractionResult.PASS;
+        }
+
+        // Server-side behavior
         if (mode == WandMode.MOVE) {
+            // Only catalysts can be moved
+            if (!(block instanceof CatalystDataProvider)) return InteractionResult.PASS;
             return tryMoveCatalyst(context, level, pos, state);
-        } else if (mode == WandMode.BREAK) {
+        }
+
+        if (mode == WandMode.BREAK) {
+            // Allow catalysts OR anything in the break tag
+            if (!(block instanceof CatalystDataProvider) && !state.is(ModTags.Blocks.WAND_CAN_BREAK)) {
+                return InteractionResult.PASS;
+            }
             return tryBreakCatalyst(context, level, pos, state);
         }
 
         return InteractionResult.PASS;
     }
+
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -202,27 +223,47 @@ public class ActivatorWandItem extends Item {
 
 
     private InteractionResult tryBreakCatalyst(UseOnContext context, Level level, BlockPos pos, BlockState state) {
-        BlockEntity be = level.getBlockEntity(pos);
+        // Only allow blocks explicitly in the tag
+        if (!state.is(ModTags.Blocks.WAND_CAN_BREAK)) {
+            return InteractionResult.FAIL;
+        }
 
-        if (be instanceof CatalystBlockEntity catalyst && catalyst.isUserPlaced()) {
-            CompoundTag tag = catalyst.saveCustomData(level.registryAccess());
-            ItemStack dropped = new ItemStack(state.getBlock().asItem());
-
-            dropped.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
-
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), dropped);
-            level.removeBlock(pos, false);
-
-            level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1f, 1f);
-
-            if (Config.catalystWandDurability) {
-                context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
-            }
-
-            context.getPlayer().getCooldowns().addCooldown(this, 10);
+        // Client: report success so the hand anim/click feels right, but do nothing destructive here
+        if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.FAIL;
+        ItemStack dropped = new ItemStack(state.getBlock().asItem());
+        if (dropped.isEmpty()) {
+            // Some blocks may not have an item form; refuse rather than deleting the block
+            return InteractionResult.FAIL;
+        }
+
+        BlockEntity be = level.getBlockEntity(pos);
+
+        // Preserve your special catalyst behavior
+        if (be instanceof CatalystBlockEntity catalyst) {
+            if (!(Config.catalystWandBreakAll || catalyst.isUserPlaced())) {
+                return InteractionResult.FAIL;
+            }
+
+            CompoundTag tag = catalyst.saveCustomData(level.registryAccess());
+            dropped.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+        }
+
+        Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), dropped);
+        level.removeBlock(pos, false);
+
+        level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1f, 1f);
+
+        if (context.getPlayer() != null) {
+            if (Config.catalystWandDurability) {
+                context.getItemInHand().hurtAndBreak(1, context.getPlayer(), EquipmentSlot.MAINHAND);
+            }
+            context.getPlayer().getCooldowns().addCooldown(this, 10);
+        }
+
+        return InteractionResult.SUCCESS;
     }
+
 }
